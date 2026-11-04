@@ -8,8 +8,8 @@
         "apiKey": {
           "type": "string",
           "minLength": 1,
-          "pattern": "\\S",
-          "description": "本次调用的 Seerfar API Key；仅用于本次请求，不写入配置或复用。HTTP 模式也可用 X-Seerfar-Api-Key 请求头。"
+          "pattern": "^\\S+$",
+          "description": "本次调用的 Seerfar API Key；也可先在 WorkBuddy 插件设置中配置，之后可省略。"
         }
       },
       "additionalProperties": false,
@@ -27,8 +27,8 @@
         "apiKey": {
           "type": "string",
           "minLength": 1,
-          "pattern": "\\S",
-          "description": "本次调用的 Seerfar API Key；仅用于本次请求，不写入配置或复用。HTTP 模式也可用 X-Seerfar-Api-Key 请求头。"
+          "pattern": "^\\S+$",
+          "description": "本次调用的 Seerfar API Key；也可先在 WorkBuddy 插件设置中配置，之后可省略。"
         },
         "body": {
           "type": "object",
@@ -742,8 +742,8 @@
         "apiKey": {
           "type": "string",
           "minLength": 1,
-          "pattern": "\\S",
-          "description": "本次调用的 Seerfar API Key；仅用于本次请求，不写入配置或复用。HTTP 模式也可用 X-Seerfar-Api-Key 请求头。"
+          "pattern": "^\\S+$",
+          "description": "本次调用的 Seerfar API Key；也可先在 WorkBuddy 插件设置中配置，之后可省略。"
         },
         "body": {
           "type": "object",
@@ -1322,8 +1322,8 @@
         "apiKey": {
           "type": "string",
           "minLength": 1,
-          "pattern": "\\S",
-          "description": "本次调用的 Seerfar API Key；仅用于本次请求，不写入配置或复用。HTTP 模式也可用 X-Seerfar-Api-Key 请求头。"
+          "pattern": "^\\S+$",
+          "description": "本次调用的 Seerfar API Key；也可先在 WorkBuddy 插件设置中配置，之后可省略。"
         },
         "body": {
           "type": "object",
@@ -1657,8 +1657,8 @@
         "apiKey": {
           "type": "string",
           "minLength": 1,
-          "pattern": "\\S",
-          "description": "本次调用的 Seerfar API Key；仅用于本次请求，不写入配置或复用。HTTP 模式也可用 X-Seerfar-Api-Key 请求头。"
+          "pattern": "^\\S+$",
+          "description": "本次调用的 Seerfar API Key；也可先在 WorkBuddy 插件设置中配置，之后可省略。"
         },
         "body": {
           "type": "object",
@@ -1992,8 +1992,8 @@
         "apiKey": {
           "type": "string",
           "minLength": 1,
-          "pattern": "\\S",
-          "description": "本次调用的 Seerfar API Key；仅用于本次请求，不写入配置或复用。HTTP 模式也可用 X-Seerfar-Api-Key 请求头。"
+          "pattern": "^\\S+$",
+          "description": "本次调用的 Seerfar API Key；也可先在 WorkBuddy 插件设置中配置，之后可省略。"
         },
         "body": {
           "type": "object",
@@ -2326,8 +2326,8 @@
         "apiKey": {
           "type": "string",
           "minLength": 1,
-          "pattern": "\\S",
-          "description": "本次调用的 Seerfar API Key；仅用于本次请求，不写入配置或复用。HTTP 模式也可用 X-Seerfar-Api-Key 请求头。"
+          "pattern": "^\\S+$",
+          "description": "本次调用的 Seerfar API Key；也可先在 WorkBuddy 插件设置中配置，之后可省略。"
         },
         "body": {
           "type": "object",
@@ -2660,8 +2660,8 @@
         "apiKey": {
           "type": "string",
           "minLength": 1,
-          "pattern": "\\S",
-          "description": "本次调用的 Seerfar API Key；仅用于本次请求，不写入配置或复用。HTTP 模式也可用 X-Seerfar-Api-Key 请求头。"
+          "pattern": "^\\S+$",
+          "description": "本次调用的 Seerfar API Key；也可先在 WorkBuddy 插件设置中配置，之后可省略。"
         },
         "body": {
           "type": "object",
@@ -2712,8 +2712,8 @@
         "apiKey": {
           "type": "string",
           "minLength": 1,
-          "pattern": "\\S",
-          "description": "本次调用的 Seerfar API Key；仅用于本次请求，不写入配置或复用。HTTP 模式也可用 X-Seerfar-Api-Key 请求头。"
+          "pattern": "^\\S+$",
+          "description": "本次调用的 Seerfar API Key；也可先在 WorkBuddy 插件设置中配置，之后可省略。"
         },
         "body": {
           "type": "object",
@@ -2769,8 +2769,8 @@
         "apiKey": {
           "type": "string",
           "minLength": 1,
-          "pattern": "\\S",
-          "description": "本次调用的 Seerfar API Key；仅用于本次请求，不写入配置或复用。HTTP 模式也可用 X-Seerfar-Api-Key 请求头。"
+          "pattern": "^\\S+$",
+          "description": "本次调用的 Seerfar API Key；也可先在 WorkBuddy 插件设置中配置，之后可省略。"
         },
         "body": {
           "type": "object",
@@ -2802,8 +2802,8 @@
         "apiKey": {
           "type": "string",
           "minLength": 1,
-          "pattern": "\\S",
-          "description": "本次调用的 Seerfar API Key；仅用于本次请求，不写入配置或复用。HTTP 模式也可用 X-Seerfar-Api-Key 请求头。"
+          "pattern": "^\\S+$",
+          "description": "本次调用的 Seerfar API Key；也可先在 WorkBuddy 插件设置中配置，之后可省略。"
         },
         "body": {
           "type": "object",
@@ -2835,8 +2835,8 @@
         "apiKey": {
           "type": "string",
           "minLength": 1,
-          "pattern": "\\S",
-          "description": "本次调用的 Seerfar API Key；仅用于本次请求，不写入配置或复用。HTTP 模式也可用 X-Seerfar-Api-Key 请求头。"
+          "pattern": "^\\S+$",
+          "description": "本次调用的 Seerfar API Key；也可先在 WorkBuddy 插件设置中配置，之后可省略。"
         },
         "body": {
           "type": "object",
@@ -2884,8 +2884,8 @@
         "apiKey": {
           "type": "string",
           "minLength": 1,
-          "pattern": "\\S",
-          "description": "本次调用的 Seerfar API Key；仅用于本次请求，不写入配置或复用。HTTP 模式也可用 X-Seerfar-Api-Key 请求头。"
+          "pattern": "^\\S+$",
+          "description": "本次调用的 Seerfar API Key；也可先在 WorkBuddy 插件设置中配置，之后可省略。"
         },
         "body": {
           "type": "object",
@@ -2933,8 +2933,8 @@
         "apiKey": {
           "type": "string",
           "minLength": 1,
-          "pattern": "\\S",
-          "description": "本次调用的 Seerfar API Key；仅用于本次请求，不写入配置或复用。HTTP 模式也可用 X-Seerfar-Api-Key 请求头。"
+          "pattern": "^\\S+$",
+          "description": "本次调用的 Seerfar API Key；也可先在 WorkBuddy 插件设置中配置，之后可省略。"
         },
         "body": {
           "type": "object",
@@ -2987,8 +2987,8 @@
         "apiKey": {
           "type": "string",
           "minLength": 1,
-          "pattern": "\\S",
-          "description": "本次调用的 Seerfar API Key；仅用于本次请求，不写入配置或复用。HTTP 模式也可用 X-Seerfar-Api-Key 请求头。"
+          "pattern": "^\\S+$",
+          "description": "本次调用的 Seerfar API Key；也可先在 WorkBuddy 插件设置中配置，之后可省略。"
         },
         "body": {
           "type": "object",
@@ -3041,8 +3041,8 @@
         "apiKey": {
           "type": "string",
           "minLength": 1,
-          "pattern": "\\S",
-          "description": "本次调用的 Seerfar API Key；仅用于本次请求，不写入配置或复用。HTTP 模式也可用 X-Seerfar-Api-Key 请求头。"
+          "pattern": "^\\S+$",
+          "description": "本次调用的 Seerfar API Key；也可先在 WorkBuddy 插件设置中配置，之后可省略。"
         },
         "body": {
           "type": "object",
@@ -3163,8 +3163,8 @@
         "apiKey": {
           "type": "string",
           "minLength": 1,
-          "pattern": "\\S",
-          "description": "本次调用的 Seerfar API Key；仅用于本次请求，不写入配置或复用。HTTP 模式也可用 X-Seerfar-Api-Key 请求头。"
+          "pattern": "^\\S+$",
+          "description": "本次调用的 Seerfar API Key；也可先在 WorkBuddy 插件设置中配置，之后可省略。"
         },
         "body": {
           "type": "object",
@@ -3285,8 +3285,8 @@
         "apiKey": {
           "type": "string",
           "minLength": 1,
-          "pattern": "\\S",
-          "description": "本次调用的 Seerfar API Key；仅用于本次请求，不写入配置或复用。HTTP 模式也可用 X-Seerfar-Api-Key 请求头。"
+          "pattern": "^\\S+$",
+          "description": "本次调用的 Seerfar API Key；也可先在 WorkBuddy 插件设置中配置，之后可省略。"
         },
         "body": {
           "type": "object",
@@ -3334,8 +3334,8 @@
         "apiKey": {
           "type": "string",
           "minLength": 1,
-          "pattern": "\\S",
-          "description": "本次调用的 Seerfar API Key；仅用于本次请求，不写入配置或复用。HTTP 模式也可用 X-Seerfar-Api-Key 请求头。"
+          "pattern": "^\\S+$",
+          "description": "本次调用的 Seerfar API Key；也可先在 WorkBuddy 插件设置中配置，之后可省略。"
         },
         "body": {
           "type": "object",
@@ -3383,8 +3383,8 @@
         "apiKey": {
           "type": "string",
           "minLength": 1,
-          "pattern": "\\S",
-          "description": "本次调用的 Seerfar API Key；仅用于本次请求，不写入配置或复用。HTTP 模式也可用 X-Seerfar-Api-Key 请求头。"
+          "pattern": "^\\S+$",
+          "description": "本次调用的 Seerfar API Key；也可先在 WorkBuddy 插件设置中配置，之后可省略。"
         },
         "body": {
           "type": "object",
@@ -3445,8 +3445,8 @@
         "apiKey": {
           "type": "string",
           "minLength": 1,
-          "pattern": "\\S",
-          "description": "本次调用的 Seerfar API Key；仅用于本次请求，不写入配置或复用。HTTP 模式也可用 X-Seerfar-Api-Key 请求头。"
+          "pattern": "^\\S+$",
+          "description": "本次调用的 Seerfar API Key；也可先在 WorkBuddy 插件设置中配置，之后可省略。"
         },
         "body": {
           "type": "object",
@@ -3507,8 +3507,8 @@
         "apiKey": {
           "type": "string",
           "minLength": 1,
-          "pattern": "\\S",
-          "description": "本次调用的 Seerfar API Key；仅用于本次请求，不写入配置或复用。HTTP 模式也可用 X-Seerfar-Api-Key 请求头。"
+          "pattern": "^\\S+$",
+          "description": "本次调用的 Seerfar API Key；也可先在 WorkBuddy 插件设置中配置，之后可省略。"
         },
         "body": {
           "type": "object",
@@ -4230,8 +4230,8 @@
         "apiKey": {
           "type": "string",
           "minLength": 1,
-          "pattern": "\\S",
-          "description": "本次调用的 Seerfar API Key；仅用于本次请求，不写入配置或复用。HTTP 模式也可用 X-Seerfar-Api-Key 请求头。"
+          "pattern": "^\\S+$",
+          "description": "本次调用的 Seerfar API Key；也可先在 WorkBuddy 插件设置中配置，之后可省略。"
         },
         "body": {
           "type": "object",
@@ -4818,8 +4818,8 @@
         "apiKey": {
           "type": "string",
           "minLength": 1,
-          "pattern": "\\S",
-          "description": "本次调用的 Seerfar API Key；仅用于本次请求，不写入配置或复用。HTTP 模式也可用 X-Seerfar-Api-Key 请求头。"
+          "pattern": "^\\S+$",
+          "description": "本次调用的 Seerfar API Key；也可先在 WorkBuddy 插件设置中配置，之后可省略。"
         },
         "body": {
           "type": "object",
@@ -5562,8 +5562,8 @@
         "apiKey": {
           "type": "string",
           "minLength": 1,
-          "pattern": "\\S",
-          "description": "本次调用的 Seerfar API Key；仅用于本次请求，不写入配置或复用。HTTP 模式也可用 X-Seerfar-Api-Key 请求头。"
+          "pattern": "^\\S+$",
+          "description": "本次调用的 Seerfar API Key；也可先在 WorkBuddy 插件设置中配置，之后可省略。"
         },
         "body": {
           "type": "object",
@@ -6171,8 +6171,8 @@
         "apiKey": {
           "type": "string",
           "minLength": 1,
-          "pattern": "\\S",
-          "description": "本次调用的 Seerfar API Key；仅用于本次请求，不写入配置或复用。HTTP 模式也可用 X-Seerfar-Api-Key 请求头。"
+          "pattern": "^\\S+$",
+          "description": "本次调用的 Seerfar API Key；也可先在 WorkBuddy 插件设置中配置，之后可省略。"
         },
         "body": {
           "type": "object",
@@ -6803,8 +6803,8 @@
         "apiKey": {
           "type": "string",
           "minLength": 1,
-          "pattern": "\\S",
-          "description": "本次调用的 Seerfar API Key；仅用于本次请求，不写入配置或复用。HTTP 模式也可用 X-Seerfar-Api-Key 请求头。"
+          "pattern": "^\\S+$",
+          "description": "本次调用的 Seerfar API Key；也可先在 WorkBuddy 插件设置中配置，之后可省略。"
         },
         "body": {
           "type": "object",
@@ -7399,8 +7399,8 @@
         "apiKey": {
           "type": "string",
           "minLength": 1,
-          "pattern": "\\S",
-          "description": "本次调用的 Seerfar API Key；仅用于本次请求，不写入配置或复用。HTTP 模式也可用 X-Seerfar-Api-Key 请求头。"
+          "pattern": "^\\S+$",
+          "description": "本次调用的 Seerfar API Key；也可先在 WorkBuddy 插件设置中配置，之后可省略。"
         },
         "body": {
           "type": "object",
@@ -8025,8 +8025,8 @@
         "apiKey": {
           "type": "string",
           "minLength": 1,
-          "pattern": "\\S",
-          "description": "本次调用的 Seerfar API Key；仅用于本次请求，不写入配置或复用。HTTP 模式也可用 X-Seerfar-Api-Key 请求头。"
+          "pattern": "^\\S+$",
+          "description": "本次调用的 Seerfar API Key；也可先在 WorkBuddy 插件设置中配置，之后可省略。"
         },
         "body": {
           "type": "object",
@@ -8543,8 +8543,8 @@
         "apiKey": {
           "type": "string",
           "minLength": 1,
-          "pattern": "\\S",
-          "description": "本次调用的 Seerfar API Key；仅用于本次请求，不写入配置或复用。HTTP 模式也可用 X-Seerfar-Api-Key 请求头。"
+          "pattern": "^\\S+$",
+          "description": "本次调用的 Seerfar API Key；也可先在 WorkBuddy 插件设置中配置，之后可省略。"
         },
         "body": {
           "type": "object",
@@ -9263,8 +9263,8 @@
         "apiKey": {
           "type": "string",
           "minLength": 1,
-          "pattern": "\\S",
-          "description": "本次调用的 Seerfar API Key；仅用于本次请求，不写入配置或复用。HTTP 模式也可用 X-Seerfar-Api-Key 请求头。"
+          "pattern": "^\\S+$",
+          "description": "本次调用的 Seerfar API Key；也可先在 WorkBuddy 插件设置中配置，之后可省略。"
         },
         "body": {
           "type": "object",
@@ -9975,8 +9975,8 @@
         "apiKey": {
           "type": "string",
           "minLength": 1,
-          "pattern": "\\S",
-          "description": "本次调用的 Seerfar API Key；仅用于本次请求，不写入配置或复用。HTTP 模式也可用 X-Seerfar-Api-Key 请求头。"
+          "pattern": "^\\S+$",
+          "description": "本次调用的 Seerfar API Key；也可先在 WorkBuddy 插件设置中配置，之后可省略。"
         },
         "body": {
           "type": "object",
@@ -10012,8 +10012,8 @@
         "apiKey": {
           "type": "string",
           "minLength": 1,
-          "pattern": "\\S",
-          "description": "本次调用的 Seerfar API Key；仅用于本次请求，不写入配置或复用。HTTP 模式也可用 X-Seerfar-Api-Key 请求头。"
+          "pattern": "^\\S+$",
+          "description": "本次调用的 Seerfar API Key；也可先在 WorkBuddy 插件设置中配置，之后可省略。"
         },
         "body": {
           "type": "object",
@@ -10050,8 +10050,8 @@
         "apiKey": {
           "type": "string",
           "minLength": 1,
-          "pattern": "\\S",
-          "description": "本次调用的 Seerfar API Key；仅用于本次请求，不写入配置或复用。HTTP 模式也可用 X-Seerfar-Api-Key 请求头。"
+          "pattern": "^\\S+$",
+          "description": "本次调用的 Seerfar API Key；也可先在 WorkBuddy 插件设置中配置，之后可省略。"
         },
         "body": {
           "type": "object",
@@ -10088,8 +10088,8 @@
         "apiKey": {
           "type": "string",
           "minLength": 1,
-          "pattern": "\\S",
-          "description": "本次调用的 Seerfar API Key；仅用于本次请求，不写入配置或复用。HTTP 模式也可用 X-Seerfar-Api-Key 请求头。"
+          "pattern": "^\\S+$",
+          "description": "本次调用的 Seerfar API Key；也可先在 WorkBuddy 插件设置中配置，之后可省略。"
         },
         "body": {
           "type": "object",
@@ -10121,8 +10121,8 @@
         "apiKey": {
           "type": "string",
           "minLength": 1,
-          "pattern": "\\S",
-          "description": "本次调用的 Seerfar API Key；仅用于本次请求，不写入配置或复用。HTTP 模式也可用 X-Seerfar-Api-Key 请求头。"
+          "pattern": "^\\S+$",
+          "description": "本次调用的 Seerfar API Key；也可先在 WorkBuddy 插件设置中配置，之后可省略。"
         },
         "body": {
           "type": "object",
@@ -10154,8 +10154,8 @@
         "apiKey": {
           "type": "string",
           "minLength": 1,
-          "pattern": "\\S",
-          "description": "本次调用的 Seerfar API Key；仅用于本次请求，不写入配置或复用。HTTP 模式也可用 X-Seerfar-Api-Key 请求头。"
+          "pattern": "^\\S+$",
+          "description": "本次调用的 Seerfar API Key；也可先在 WorkBuddy 插件设置中配置，之后可省略。"
         },
         "body": {
           "type": "object",
@@ -10191,8 +10191,8 @@
         "apiKey": {
           "type": "string",
           "minLength": 1,
-          "pattern": "\\S",
-          "description": "本次调用的 Seerfar API Key；仅用于本次请求，不写入配置或复用。HTTP 模式也可用 X-Seerfar-Api-Key 请求头。"
+          "pattern": "^\\S+$",
+          "description": "本次调用的 Seerfar API Key；也可先在 WorkBuddy 插件设置中配置，之后可省略。"
         },
         "body": {
           "type": "object",
@@ -10229,8 +10229,8 @@
         "apiKey": {
           "type": "string",
           "minLength": 1,
-          "pattern": "\\S",
-          "description": "本次调用的 Seerfar API Key；仅用于本次请求，不写入配置或复用。HTTP 模式也可用 X-Seerfar-Api-Key 请求头。"
+          "pattern": "^\\S+$",
+          "description": "本次调用的 Seerfar API Key；也可先在 WorkBuddy 插件设置中配置，之后可省略。"
         },
         "body": {
           "type": "object",
@@ -10267,8 +10267,8 @@
         "apiKey": {
           "type": "string",
           "minLength": 1,
-          "pattern": "\\S",
-          "description": "本次调用的 Seerfar API Key；仅用于本次请求，不写入配置或复用。HTTP 模式也可用 X-Seerfar-Api-Key 请求头。"
+          "pattern": "^\\S+$",
+          "description": "本次调用的 Seerfar API Key；也可先在 WorkBuddy 插件设置中配置，之后可省略。"
         },
         "body": {
           "type": "object",
@@ -10300,8 +10300,8 @@
         "apiKey": {
           "type": "string",
           "minLength": 1,
-          "pattern": "\\S",
-          "description": "本次调用的 Seerfar API Key；仅用于本次请求，不写入配置或复用。HTTP 模式也可用 X-Seerfar-Api-Key 请求头。"
+          "pattern": "^\\S+$",
+          "description": "本次调用的 Seerfar API Key；也可先在 WorkBuddy 插件设置中配置，之后可省略。"
         },
         "body": {
           "type": "object",

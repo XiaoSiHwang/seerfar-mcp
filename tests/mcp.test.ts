@@ -29,6 +29,13 @@ function decode(response: CallToolResult): Record<string, unknown> {
   return JSON.parse(content.text) as Record<string, unknown>;
 }
 
+function childEnv(extra: Record<string, string> = {}): Record<string, string> {
+  const env: Record<string, string> = {};
+  for (const [key, value] of Object.entries(process.env)) if (value !== undefined) env[key] = value;
+  delete env.SEERFAR_API_KEY;
+  return { ...env, ...extra };
+}
+
 async function requestWithHost(url: string, host: string): Promise<number | undefined> {
   return new Promise((resolve, reject) => {
     const req = request(url, { headers: { Host: host } }, (response) => {
@@ -50,7 +57,7 @@ for (const modern of [false, true]) {
     });
     const baseUrl = await listen(upstream);
     const transport = new StdioClientTransport({ command: process.execPath,
-      args: [`${ROOT}/dist/src/index.js`, '--base-url', baseUrl], cwd: tmpdir(), stderr: 'pipe' });
+      args: [`${ROOT}/dist/src/index.js`, '--base-url', baseUrl], cwd: tmpdir(), stderr: 'pipe', env: childEnv() });
     const client = new Client({ name: 'seerfar-test', version: '1.0.0' }, modern ? { versionNegotiation: { mode: 'auto' } } : {});
     try {
       await client.connect(transport);
@@ -77,6 +84,51 @@ for (const modern of [false, true]) {
     } finally { await client.close(); await close(upstream); }
   });
 }
+
+test('WorkBuddy 插件注入 SEERFAR_API_KEY 后可直接调用，不接受工具参数 Key，工具注解符合审批模式', async () => {
+  const seen: string[] = [];
+  const upstream = createServer(async (request, response) => {
+    for await (const _chunk of request) { /* drain */ }
+    seen.push(String(request.headers.authorization));
+    response.writeHead(200, { 'Content-Type': 'application/json' });
+    response.end(JSON.stringify({ code: 200, data: { ok: true } }));
+  });
+  const baseUrl = await listen(upstream);
+  const transport = new StdioClientTransport({ command: process.execPath,
+    args: [`${ROOT}/dist/src/index.js`, '--base-url', baseUrl], cwd: tmpdir(), stderr: 'pipe',
+    env: childEnv({ SEERFAR_API_KEY: 'plugin-env-key' }) });
+  const client = new Client({ name: 'seerfar-workbuddy-test', version: '1.0.0' });
+  try {
+    await client.connect(transport);
+    const { tools } = await client.listTools();
+    assert.equal(tools.length, 45);
+    const quotaTool = tools.find((tool) => tool.name === 'seerfar_quota')!;
+    assert.ok(!quotaTool.inputSchema.required?.includes('apiKey'));
+    assert.equal(quotaTool.inputSchema.properties?.apiKey, undefined);
+    assert.equal(quotaTool.annotations?.readOnlyHint, true);
+    assert.equal(quotaTool.annotations?.idempotentHint, true);
+    const collectTool = tools.find((tool) => tool.name === 'seerfar_ozon_product_collect')!;
+    assert.equal(collectTool.annotations?.readOnlyHint, false);
+    assert.equal(collectTool.annotations?.destructiveHint, false);
+    assert.equal(collectTool.annotations?.idempotentHint, false);
+    assert.equal(collectTool.annotations?.openWorldHint, true);
+
+    const configured = await client.callTool({ name: 'seerfar_quota', arguments: {} });
+    assert.equal(configured.isError, false);
+    assert.equal(seen.at(-1), 'Bearer plugin-env-key');
+
+    const rejected = await client.callTool({ name: 'seerfar_quota', arguments: { apiKey: 'override-key' } });
+    assert.equal(rejected.isError, true);
+    assert.equal(seen.length, 1);
+
+    const version = decode(await client.callTool({ name: 'seerfar_api_version', arguments: {} }));
+    assert.equal(version.apiKeyConfigured, true);
+
+    const doc = decode(await client.callTool({ name: 'seerfar_get_api_doc', arguments: { id: 'quota' } }));
+    const docSchema = doc.inputSchema as { required?: string[] };
+    assert.ok(!docSchema.required?.includes('apiKey'));
+  } finally { await client.close(); await close(upstream); }
+});
 
 for (const modern of [false, true]) {
   test(`HTTP ${modern ? '2026 协议' : '2025 协议'}：请求头与参数传 Key，跨请求隔离和并发`, async () => {

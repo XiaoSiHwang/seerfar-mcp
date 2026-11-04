@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import { parseArgs } from 'node:util';
 import { serveStdio } from '@modelcontextprotocol/server/stdio';
-import { SeerfarClient } from './api-client.js';
+import { SeerfarClient, normalizeApiKey } from './api-client.js';
 import { createSeerfarServer } from './server.js';
 import { createHttpServer } from './http.js';
 import { loadSnapshot } from './snapshots.js';
@@ -12,13 +12,17 @@ async function main(): Promise<void> {
     'base-url': { type: 'string' }, 'timeout-ms': { type: 'string' }, help: { type: 'boolean', short: 'h' },
   } });
   if (values.help) {
-    console.log('Seerfar API MCP\n用法：node dist/src/index.js [--transport stdio|http] [--port 3000] [--base-url URL] [--timeout-ms 30000]\nAPI Key 由每次工具调用的 apiKey 参数提供；HTTP 也支持 X-Seerfar-Api-Key。');
+    console.log('Seerfar API MCP\n用法：node dist/src/index.js [--transport stdio|http] [--port 3000] [--base-url URL] [--timeout-ms 30000]\nAPI Key 优先读取 WorkBuddy 插件设置注入的 SEERFAR_API_KEY；也可由每次工具调用的 apiKey 参数提供；HTTP 也支持 X-Seerfar-Api-Key。');
     return;
   }
   if (!['stdio', 'http'].includes(values.transport!)) throw new Error('transport 必须是 stdio 或 http');
-  const options = { snapshot: await loadSnapshot(), client: new SeerfarClient({
+  let envKey: string | undefined;
+  try { envKey = process.env.SEERFAR_API_KEY ? normalizeApiKey(process.env.SEERFAR_API_KEY) : undefined; }
+  catch { envKey = undefined; }
+  const options = { snapshot: await loadSnapshot(), envKey, client: new SeerfarClient({
     baseUrl: values['base-url'] ?? process.env.SEERFAR_BASE_URL,
     timeoutMs: Number(values['timeout-ms'] ?? process.env.SEERFAR_TIMEOUT_MS ?? 30000),
+    envKey,
   }) };
   if (values.transport === 'stdio') {
     const handle = serveStdio(() => createSeerfarServer(options));

@@ -94,13 +94,19 @@ export function parametersSchema(parameters: Parameter[], example?: JsonObject):
   return schema;
 }
 
-export function inputSchema(endpoint: Endpoint, headerKeyAllowed = false): JsonSchema {
+export function inputSchema(endpoint: Endpoint, headerKeyAllowed = false, envKeyConfigured = false): JsonSchema {
   const schema = objectSchema(false);
-  schema.properties!.apiKey = {
-    type: 'string', minLength: 1, pattern: '\\S',
-    description: '本次调用的 Seerfar API Key；仅用于本次请求，不写入配置或复用。HTTP 模式也可用 X-Seerfar-Api-Key 请求头。',
-  };
-  schema.required = headerKeyAllowed ? [] : ['apiKey'];
+  schema.required = [];
+  // 插件模式下 Key 只从 WorkBuddy 配置注入，不接受工具参数，避免 Key 进入对话记录。
+  if (!envKeyConfigured) {
+    schema.properties!.apiKey = {
+      type: 'string', minLength: 1, pattern: '^\\S+$',
+      description: headerKeyAllowed
+        ? '本次调用的 Seerfar API Key；HTTP 模式也可用 X-Seerfar-Api-Key 请求头。'
+        : '本次调用的 Seerfar API Key；也可先在 WorkBuddy 插件设置中配置，之后可省略。',
+    };
+    if (!headerKeyAllowed) schema.required.push('apiKey');
+  }
   const groups = [
     ['path', endpoint.pathParams], ['query', endpoint.queryParams],
     ['headers', endpoint.headerParams?.filter((p) => p.name.toLowerCase() !== 'authorization' && p.name.toLowerCase() !== 'content-type')],

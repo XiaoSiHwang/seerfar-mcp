@@ -44,6 +44,28 @@ test('同一实例并发使用不同 Key；参数优先于请求头；缺 Key �
   assert.equal(keys.length, 4);
 });
 
+test('WorkBuddy 插件环境变量 Key 兜底，参数/请求头优先，响应脱敏', async () => {
+  const keys: string[] = [];
+  const client = new SeerfarClient({ envKey: 'plugin-env-key', fetcher: async (_url, options) => {
+    keys.push(new Headers(options?.headers).get('Authorization')!);
+    return json({ code: 200, data: { echoed: 'plugin-env-key' } });
+  } });
+  const response = await client.execute(quota, {});
+  assert.equal(keys[0], 'Bearer plugin-env-key');
+  assert.ok(!JSON.stringify(response).includes('plugin-env-key'));
+  await client.execute(quota, {}, 'header-key');
+  await client.execute(quota, { apiKey: 'argument-key' });
+  assert.deepEqual(keys.slice(-2), ['Bearer header-key', 'Bearer argument-key']);
+
+  const invalid = new SeerfarClient({ envKey: 'bad key', fetcher: async () => { throw new Error('should not request'); } });
+  const missing = await invalid.execute(quota, {});
+  assert.equal(missing.isError, true);
+  assert.equal(missing.error?.kind, 'authentication');
+
+  const unresolved = new SeerfarClient({ envKey: '${user_config.api_key}', fetcher: async () => { throw new Error('should not request'); } });
+  assert.equal((await unresolved.execute(quota, {})).error?.kind, 'authentication');
+});
+
 test('HTTP 错误、业务错误和限流保持错误语义且不重试', async () => {
   for (const [status, code] of [[401, 401], [403, 403], [429, 429], [500, 500], [200, 8000], [200, 6102]]) {
     let count = 0;

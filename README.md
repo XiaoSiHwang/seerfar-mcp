@@ -1,60 +1,151 @@
 # Seerfar API MCP
 
-基于官方 MCP TypeScript SDK 的 Seerfar Open API 服务，覆盖当前文档全部 **41 个 API**，支持 Ozon、Wildberries、动态 API Key 和 API 文档版本对照。提供 stdio 与 Streamable HTTP；兼容 MCP 2025 版与 2026-07-28 版协议。
+把 Seerfar Open API 接进 AI 客户端（Claude Desktop、Cursor、VS Code 及其他支持 MCP 的工具），用自然语言查询 Ozon、Wildberries 的店铺、竞品、类目、关键词、榜单与评论数据。
 
-## 快速开始
+覆盖官方文档全部 **41 个接口**，注册 **45 个 MCP 工具** 和 **3 个资源**；同时支持 stdio 与 Streamable HTTP 两种连接方式。
 
-需要 Node.js 22 或更新版本。
+- **API Key 随用随传**：不用把 Key 写进配置文件，每次调用由 AI 携带，服务不落盘、不写日志、不做跨调用复用。
+- **接口自带说明书**：AI 可以先查接口目录和完整中文文档，再按官方参数调用，无需人工对照网页。
+- **文档可自我核对**：内置官方文档快照与哈希，可随时检查上游是否有新增或变更接口。
+
+---
+
+## 一、快速开始
+
+### 1. 安装
+
+需要 **Node.js 22 或更新版本**（`node -v` 确认）。
 
 ```sh
+git clone <本仓库地址> seerfar-mcp
+cd seerfar-mcp
 npm ci
 npm run build
-npm start
 ```
 
-默认以 stdio 模式运行，等待 MCP 客户端发送协议消息；业务调用不需要在启动配置中设置 API Key。
+`npm run build` 会生成 `dist/`，后续客户端直接运行里面的入口文件，不需要再启动终端。
 
-对于采用 `mcpServers` JSON 配置的客户端，配置示例如下；请使用本机实际绝对路径。其他客户端按其自身配置格式填写相同命令及参数。
+### 2. 在客户端中注册服务
+
+打开客户端的 MCP 配置文件，加入下面这段（**路径请改成本机真实的绝对路径**）：
 
 ```json
 {
   "mcpServers": {
     "seerfar": {
       "command": "node",
-      "args": ["/Users/leslie/Documents/GZYQ-Project/seerfar-api-mcp/dist/src/index.js"]
+      "args": ["/绝对路径/seerfar-mcp/dist/src/index.js"]
     }
   }
 }
 ```
 
-不要把 `npm start` 的控制台输出直接当作协议输入；客户端直接执行上面的 `node` 命令。服务启动后不需要在线读取文档，使用随项目保存的快照。
+- 仓库里的 [`examples/mcp-config.json`](examples/mcp-config.json) 是同样内容的可复制版本。
+- 配置写的是 `node` 命令且**不带任何参数**：服务默认以 stdio 模式运行，与客户端通信。
+- 如果客户端提示找不到 `node`（常见于 nvm / fnm 安装），把 `command` 换成 `node` 的绝对路径，例如 `/Users/你的用户名/.nvm/versions/node/v22.11.0/bin/node`（`which node` 可查看）。
+- 保存后重启客户端，工具列表里出现 `seerfar_list_apis` 等 `seerfar_*` 即表示接入成功。
 
-## 动态传入 API Key
+### 3. 开始对话
 
-每个业务工具都有 `apiKey` 参数，服务仅将其加入本次上游请求的 `Authorization: Bearer ...` 请求头。支持直接传原始 Key 或 `Bearer ...`。Key 不写入服务配置、环境变量或服务日志，不在不同调用之间复用。
+服务启动后无需联网读取文档，随时可以这样问：
 
-先调用 `seerfar_list_apis` 找到接口，再通过 `seerfar_get_api_doc` 查看参数和完整示例。
+> 用 `seerfar_list_apis` 看看你能查哪些 Seerfar 数据。
 
-查询积分，工具 `seerfar_quota`：
+> 用我这次提供的 Key 查一下积分：`sk-xxxx`。
+
+> 用 Ozon 竞品接口查 SKU `175924376` 最近 30 天的数据。
+
+AI 会自动挑选工具并组织参数；你也可以直接点名某个工具，见下方[工具一览](#三工具一览)。
+
+---
+
+## 二、API Key 怎么给
+
+**每个业务工具都有一个 `apiKey` 参数**，服务只把它放进本次上游请求的 `Authorization: Bearer ...` 请求头。
 
 ```json
-{"apiKey": "本次调用的API Key"}
+{"apiKey": "你的 API Key"}
 ```
 
-查询 Ozon 竞品，工具 `seerfar_ozon_product_detail_search`：
+- 支持原始 Key 或 `Bearer 你的Key` 两种写法。
+- Key **不写入配置文件、不读环境变量、不保存在服务端、不跨调用复用**；上游响应若回显 Key 会被脱敏为 `[REDACTED]`。
+- Key 会作为工具参数经过客户端传输，因此**客户端的聊天记录、日志和工具调用记录**按该客户端自身的设置保存——请不要在共享会话或公开渠道里粘贴生产 Key。
+- 缺少或格式非法的 Key 不会发起任何上游请求，直接返回鉴权错误。
+
+> HTTP 模式还支持在请求头里带 Key，见[第四节](#四http-模式自建或局域网接入)。
+
+---
+
+## 三、工具一览
+
+### 查询类工具（无需 Key）
+
+| 工具 | 用途 |
+| --- | --- |
+| `seerfar_list_apis` | 列出全部接口，可用 `keyword` 按 ID、名称或路径筛选 |
+| `seerfar_get_api_doc` | 按 `id` 或工具名查看完整中文文档：参数、必填条件、响应字段、示例、费用、错误说明 |
+| `seerfar_api_version` | 查看服务版本、当前文档快照、内容哈希与上游更新日期 |
+| `seerfar_check_api_updates` | 在线只读比对官方文档与当前快照，报告新增、删除和字段变化 |
+
+推荐工作流：**先 `seerfar_list_apis` 找接口 → 再 `seerfar_get_api_doc` 看参数 → 最后调用业务工具。**
+
+### 业务工具
+
+每个官方接口对应一个独立工具，命名为 `seerfar_` + 官方接口 ID（短横线换成下划线），例如 `seerfar_ozon_product_detail_search`。
+
+| 数据类别 | 接口数 | 典型工具 |
+| --- | ---: | --- |
+| 积分 | 1 | `seerfar_quota` |
+| 店铺、店铺品牌、店铺类目 | 6 | `seerfar_ozon_shop_search` |
+| 竞品、相似商品、变体特征、Top 变体、变体分页 | 10 | `seerfar_ozon_product_detail_search` |
+| 类目 | 2 | `seerfar_ozon_category_search` |
+| 热销榜单、市场热词 | 4 | `seerfar_ozon_product_report_search` |
+| 关键词挖掘、关键词反查 | 4 | `seerfar_ozon_keyword_mining` |
+| 商品采集、采集箱分页 | 4 | `seerfar_ozon_product_collect` |
+| 评论分析：任务、报表、词频、统计、原始评论 | 10 | `seerfar_ozon_review_analyse_task_add` |
+
+Ozon 与 Wildberries 各有对应工具；完整清单（路径、积分费用、调用频率）见 [接口覆盖清单](docs/API_COVERAGE.md)。
+
+### 资源
+
+| URI | 内容 |
+| --- | --- |
+| `seerfar://api/version` | 版本与文档快照信息 |
+| `seerfar://api/catalog` | 当前接口目录 |
+| `seerfar://api/updates` | 上游更新记录 |
+
+---
+
+## 四、常见调用示例
+
+### 查积分
+
+工具：`seerfar_quota`
+
+```json
+{"apiKey": "你的 API Key"}
+```
+
+用在正式查询前确认余额与 Key 是否有效，这个接口不消耗积分。
+
+### 查 Ozon 竞品
+
+工具：`seerfar_ozon_product_detail_search`
 
 ```json
 {
-  "apiKey": "本次调用的API Key",
+  "apiKey": "你的 API Key",
   "body": {"sku": "175924376", "dateRange": "past_30_days"}
 }
 ```
 
-查询 Ozon 店铺，工具 `seerfar_ozon_shop_search`：
+### 查 Ozon 店铺
+
+工具：`seerfar_ozon_shop_search`
 
 ```json
 {
-  "apiKey": "本次调用的API Key",
+  "apiKey": "你的 API Key",
   "body": {
     "id": 118364,
     "page": {
@@ -66,95 +157,101 @@ npm start
 }
 ```
 
-服务不记录 Key，但通过工具参数提供的 Key 会经过调用方客户端；客户端的聊天记录和工具记录遵循客户端自身设置。
+### 多步任务：采集商品后读采集箱
 
-## HTTP 接入
+先 `seerfar_ozon_product_collect` 提交 SKU，再用 `seerfar_wb_collect_box_page` / `seerfar_ozon_collect_box_page` 分页查询结果。评论分析任务同理：创建任务后按任务 ID 轮询报表。**服务不会自动重试或自动翻页**，每一步都由你或 AI 按需触发。
+
+### 参数怎么填
+
+工具输入按接口需要包含 `body`、`path`、`query`、`headers` 四类字段，当前全部接口使用 GET 或 JSON POST：
+
+- 参数按官方类型、必填条件、嵌套对象、数组和枚举校验，缺失必填项会被拒绝。
+- 官方示例中可选的 `null` 过滤条件允许传入；部分数值字段官方示例用字符串，两种写法都兼容并原样转发。
+- `body` 允许带参数表未列出的扩展字段；数量、日期等业务限制仍由上游校验。
+- 不确定字段时直接问 AI 或调用 `seerfar_get_api_doc`，不要凭猜测拼参数。
+
+---
+
+## 五、HTTP 模式（自建或局域网接入）
+
+适合需要长期运行、被多个客户端共用，或通过 URL 接入（`examples/mcp-http-config.json`）的场景：
 
 ```sh
 npm start -- --transport http --port 3000
 ```
 
-MCP 地址为 `http://127.0.0.1:3000/mcp`，健康检查为 `http://127.0.0.1:3000/health`。HTTP 模式仍支持每次调用的 `apiKey` 参数，也可以在**每个 MCP HTTP 请求**中传入 `X-Seerfar-Api-Key`。同时提供时，工具参数优先；二者均缺失时不调用上游。请求头的 Key 不保存在会话中。
-
-服务使用无状态 HTTP 连接，默认仅监听 `127.0.0.1`，并校验 Host 和 Origin。当前交付范围是本地服务，未部署到公网。
-
-## 接口覆盖
-
-| 类别 | 接口数 |
-| --- | ---: |
-| API Key 积分 | 1 |
-| 店铺、店铺品牌、店铺类目 | 6 |
-| 竞品、相似商品、变体特征、Top 变体、变体分页 | 10 |
-| 类目 | 2 |
-| 热销榜单、市场热词 | 4 |
-| 关键词挖掘、关键词反查 | 4 |
-| 商品采集、采集箱分页 | 4 |
-| 评论分析任务、报表、词频、统计、原始评论 | 10 |
-
-每个 API 注册独立工具，名称为 `seerfar_` 加官方接口 ID（短横线改为下划线）。完整路径、费用和频率见 [接口覆盖清单](docs/API_COVERAGE.md)。工具输入按需要包含 `body`、`path`、`query`、`headers`；当前文档的全部接口使用 GET 或 JSON POST。
-
-另外提供 4 个无需 API Key 的工具：
-
-| 工具 | 功能 |
+| 地址 | 用途 |
 | --- | --- |
-| `seerfar_list_apis` | 列出接口，支持 `keyword` 筛选 |
-| `seerfar_get_api_doc` | 按 `id` 或工具名查看完整中文接口文档 |
-| `seerfar_api_version` | 查看服务版本、文档快照、哈希、上游更新日期 |
-| `seerfar_check_api_updates` | 在线只读比对官方文档与运行中基线 |
+| `http://127.0.0.1:3000/mcp` | MCP 接入端点 |
+| `http://127.0.0.1:3000/health` | 健康检查，返回状态与当前快照 ID |
 
-同时提供 `seerfar://api/version`、`seerfar://api/catalog`、`seerfar://api/updates` 三个 MCP 资源。
+客户端侧配置：
 
-## 版本对照与迭代
-
-以官方页面实际加载的三份 JSON 作为来源：
-
-- [接口配置](http://doc.seerfar.cn/api-docs.config.json)：请求、响应、示例和说明。
-- [更新记录](http://doc.seerfar.cn/api-updates.json)：上游按日期发布的变化。
-- [费用与频率](http://doc.seerfar.cn/api-pricing.example.json)：各接口积分和调用频率。
-
-初始基线抓取于 **2026-10-25**，页面标注版本 **v1.1**，最新更新日期 **2026-10-15**。页面版本号可能不随每次更新而变化，因此使用三份数据的 SHA-256 内容哈希识别实际更新，分别记录每个接口的请求、响应、说明及费用哈希。
-
-检查官方更新：
-
-```sh
-npm run api:check
+```json
+{
+  "mcpServers": {
+    "seerfar": {"url": "http://127.0.0.1:3000/mcp"}
+  }
+}
 ```
 
-生成 `reports/api-diff.json` 与 `reports/api-diff.md`，报告新增、删除、修改的接口及字段路径；JSON 包含修改前后的值，同时检测基础地址、公共说明、上游更新记录和定价变化。退出码 `0` 表示无更新，`2` 表示有更新，`1` 表示获取或校验失败。检查不会修改当前基线。
+HTTP 模式同样支持每次调用的 `apiKey` 参数，也可以在**每个 MCP HTTP 请求**上带 `X-Seerfar-Api-Key` 请求头。两者同时提供时以工具参数为准；都缺失则不调用上游。请求头里的 Key 不做会话级保存。
 
-采用新文档并更新基线：
+服务使用无状态连接，默认只监听 `127.0.0.1` 并校验 Host 与 Origin，**面向本机或受信环境使用**。若需跨机器访问，请自行在反向代理层完成鉴权与 TLS。
+
+### 启动参数
+
+| 参数 | 环境变量 | 默认值 |
+| --- | --- | --- |
+| `--transport stdio\|http` | — | `stdio` |
+| `--port 3000` | — | `3000` |
+| `--base-url URL` | `SEERFAR_BASE_URL` | `https://api.seerfar.cn` |
+| `--timeout-ms 30000` | `SEERFAR_TIMEOUT_MS` | `30000` |
+
+上游地址只能由启动配置指定，工具参数无法更换请求目标；服务不跟随上游重定向。
+
+---
+
+## 六、返回结果与错误
+
+每次调用返回 `httpStatus` 和完整 `response`：
+
+- HTTP 非 2xx，或业务 `code != 200`，标记为 MCP 错误（`isError`）。
+- 触发限流时保留上游的 `retryAfter`，可按该值稍后重试。
+- 超时、网络失败、非 JSON 响应同样以错误返回。
+- 响应结构不做固定裁剪，上游新增字段会原样透出，便于后续按需取值。
+
+**计费与副作用**：部分接口按次或按 SKU 扣积分，商品采集与创建分析任务还会写入账号数据。服务不会自动重试，也不会替你做付费验证调用；调用前请确认意图与费用（`seerfar_get_api_doc` 中标注了每个接口的积分与频率）。
+
+---
+
+## 七、常见问题
+
+**客户端里看不到 `seerfar_*` 工具？**
+检查 `args` 中的路径是否为绝对路径且存在 `dist/src/index.js`（先跑过 `npm run build`），然后重启客户端。
+
+**提示 `spawn node ENOENT` 或找不到命令？**
+`command` 改用 `node` 的绝对路径（`which node` 查看）。
+
+**调用时报鉴权错误？**
+确认本次调用带了 `apiKey`，且 Key 没有多余空格；可先用 `seerfar_quota` 验证 Key 与余额。
+
+**要联网才能用吗？**
+不需要。接口文档以快照形式随项目保存，只有 `seerfar_check_api_updates` 和文档同步会访问官方页面。
+
+**服务会不会改我的账号数据？**
+只会执行你（或 AI 经你确认后）发起的调用；采集、创建分析任务等写操作由你决定是否触发。
+
+**Windows 路径怎么写？**
+JSON 中反斜杠需转义，例如 `"C:\\\\tools\\\\seerfar-mcp\\\\dist\\\\src\\\\index.js"`。
+
+---
+
+## 八、维护与开发
+
+文档快照同步、版本差异对照、测试与协议兼容性验证等研发流程，见 [维护指南](docs/MAINTENANCE.md)；接口明细见 [接口覆盖清单](docs/API_COVERAGE.md)，版本变化见 [变更记录](CHANGELOG.md)。
 
 ```sh
-npm run api:sync
-npm run check
+npm run check   # 类型检查 + 全部测试
+npm run dev     # 以 tsx 直接运行源码
 ```
-
-同步保存不可覆盖的历史快照、更新当前清单和工具 Schema，并将版本差异保存到 `docs/changes/`。接口工具由快照生成，通常无需手写新接口；未支持的参数类型会阻止同步。仍需检查差异并验证业务兼容性；如果上游改用文件上传等新请求编码，需要补充适配。完成后重启 MCP 服务。已运行的服务继续使用启动时加载的快照。
-
-比较任意两个已保存版本：
-
-```sh
-npm run api:diff -- <旧快照ID> <新快照ID>
-```
-
-离线导入或检查：将官方三份 JSON 保存为同一目录下的 `config.json`、`updates.json`、`pricing.json`，再执行 `npm run api:sync -- --from-dir /绝对路径` 或 `npm run api:check -- --from-dir /绝对路径`。
-
-`api/current.json` 保存当前版本及每个接口的哈希；`api/snapshots/` 保存完整历史原文；`api/catalog.json` 保存生成的工具 Schema。建议将这些文件与代码一并纳入版本管理。
-
-## 请求行为与验证
-
-默认 API 地址为 `https://api.seerfar.cn`，已验证该地址可访问。官方页面配置目前使用 HTTP，MCP 的业务请求优先使用同域 HTTPS。文档站点目前 HTTPS 证书不匹配，文档同步按官方链接使用 HTTP，不携带 API Key。
-
-可通过 `--base-url` / `SEERFAR_BASE_URL` 指定 API 地址，通过 `--timeout-ms` / `SEERFAR_TIMEOUT_MS` 指定超时，默认 30 秒。API 地址只能由服务启动配置指定，工具参数不能更换请求目标；不跟随上游重定向。
-
-参数按官方类型、必填条件、嵌套对象、数组及明确枚举校验。允许示例中的可选 `null` 过滤条件；部分数值字段的官方示例使用字符串，兼容这两种写法并原样转发。参数表未列出的示例字段保留，`body` 允许扩展字段；描述中的数量、日期等业务限制仍由上游校验。响应不强制套用固定结构，避免丢失上游新增字段。
-
-工具结果包含 `httpStatus` 和完整 `response`，HTTP 非成功状态或业务 `code != 200` 标记为 MCP `isError`；限流时保留 `retryAfter`。超时、网络失败、非 JSON 响应也作为错误返回。上游响应若回显本次 Key 会脱敏。
-
-部分查询会扣积分，商品采集和分析任务会写入账号数据。服务不自动重试、不自动翻页，也不为验证调用付费接口；分页、轮询和后续任务由调用方按用户意图发起。
-
-```sh
-npm run check
-```
-
-验证包含全部 41 个官方请求示例和转发路径、动态 Key 隔离、鉴权/业务/限流错误、超时、版本差异，以及官方 MCP 客户端通过两版协议连接 stdio 和 HTTP。真实账号权限、积分扣费和业务返回数据需要使用有效 API Key 后另行验收。

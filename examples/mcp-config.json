@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "seerfar": {
+      "command": "node",
+      "args": [
+        "/Users/leslie/Documents/GZYQ-Project/seerfar-api-mcp/dist/src/index.js"
+      ]
+    }
+  }
+}

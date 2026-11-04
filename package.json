@@ -1,0 +1,32 @@
+{
+  "name": "seerfar-api-mcp",
+  "version": "0.1.0",
+  "description": "覆盖 Seerfar Open API 的 MCP 服务，支持动态 API Key 与文档版本比对",
+  "type": "module",
+  "private": true,
+  "engines": { "node": ">=22" },
+  "bin": { "seerfar-api-mcp": "dist/src/index.js" },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/src/index.js",
+    "dev": "node --import tsx src/index.ts",
+    "typecheck": "tsc --noEmit",
+    "pretest": "npm run build",
+    "test": "node --import tsx --test tests/*.test.ts",
+    "check": "npm run typecheck && npm test",
+    "api:check": "node --import tsx scripts/api-sync.ts --check",
+    "api:sync": "node --import tsx scripts/api-sync.ts",
+    "api:diff": "node --import tsx scripts/api-diff.ts"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/server": "2.4.0",
+    "@modelcontextprotocol/node": "2.1.2",
+    "ajv": "^8.17.1"
+  },
+  "devDependencies": {
+    "@modelcontextprotocol/client": "2.4.0",
+    "@types/node": "^24.0.0",
+    "tsx": "^4.20.0",
+    "typescript": "~5.9.3"
+  }
+}

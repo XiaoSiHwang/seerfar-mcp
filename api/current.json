@@ -1,0 +1,565 @@
+{
+  "schemaVersion": 1,
+  "snapshotId": "2026-10-25-a4154cba9736",
+  "fetchedAt": "2026-10-25T08:37:16.320Z",
+  "contentHash": "a4154cba97368874bd13272bcb042945dcb90fc227d30ecb1eecf4aad035ccb5",
+  "documentBadges": [
+    {
+      "zh-CN": "版本 v1.1",
+      "en-US": "Version v1.1",
+      "ru-RU": "Версия v1.1"
+    },
+    {
+      "zh-CN": "整理日期 2026-10-15",
+      "en-US": "Organized 2026-10-15",
+      "ru-RU": "Дата подготовки 2026-10-15"
+    },
+    {
+      "zh-CN": "REST API",
+      "en-US": "REST API",
+      "ru-RU": "REST API"
+    }
+  ],
+  "latestUpdateDate": "2026-10-15",
+  "endpointCount": 41,
+  "sourceUrls": {
+    "config": "http://doc.seerfar.cn/api-docs.config.json",
+    "updates": "http://doc.seerfar.cn/api-updates.json",
+    "pricing": "http://doc.seerfar.cn/api-pricing.example.json"
+  },
+  "operations": [
+    {
+      "id": "quota",
+      "tool": "seerfar_quota",
+      "method": "GET",
+      "path": "/open-api/quota",
+      "label": "查询 API Key 积分",
+      "hashes": {
+        "request": "d00864db9136574e28f8dfaf24aae1da4fd94949eaba1381c155c42e06b38dc5",
+        "response": "43d89e60ce2f568acaf17bcd46748075320f191b71ab5345741204691400a33d",
+        "documentation": "28c0a53b58e36bbed4b32da2cf9cf70ac5dd96a3bccec7501750dafbfa45aff1",
+        "pricing": "bbe655ab8a5b7e33077e5295e52896eb8d66c36dae36c395a17a27883e67dde3"
+      }
+    },
+    {
+      "id": "ozon-shop-search",
+      "tool": "seerfar_ozon_shop_search",
+      "method": "POST",
+      "path": "/open-api/shop/detail/search/ozon",
+      "label": "Ozon 查店铺",
+      "hashes": {
+        "request": "0dc17ecfb78363937345577233f8ba332a8630a35f0d71a7b3a05a51472a5410",
+        "response": "ef545a6cb9272979aef24fde15a071bcd82c01a60f2de9da051e9d1af8db7059",
+        "documentation": "d00f635e29761c7da254d83824c09f7e84db481e32dd2a2012604d02c1ba794b",
+        "pricing": "ed4f6f5924d009ecec0b019089a8556ab924d4e29d209fde61d3e7187d7b7ed9"
+      }
+    },
+    {
+      "id": "wb-shop-search",
+      "tool": "seerfar_wb_shop_search",
+      "method": "POST",
+      "path": "/open-api/shop/detail/search/wb",
+      "label": "Wildberries 查店铺",
+      "hashes": {
+        "request": "41c59c1e4d5b1731315894573c61aad1d109c22a2a5a1365d13992d8d12171ba",
+        "response": "980c55381eb2b128a406f06a04edd0aaffcb5830ef9d1eb06342682fc2615a80",
+        "documentation": "6f0edbaf5f0c74600782e8b4c04c108b212c08b0c629380c885530d465177390",
+        "pricing": "97d2e1efa19567ddb96c6413cecf29c458c38810e8b1049a6551d0cc62bf90c0"
+      }
+    },
+    {
+      "id": "ozon-shop-brand-search",
+      "tool": "seerfar_ozon_shop_brand_search",
+      "method": "POST",
+      "path": "/open-api/shop/detail/brand/search/ozon",
+      "label": "Ozon 查店铺品牌",
+      "hashes": {
+        "request": "e2b7f3a93af19a3e96403dad7b30f0fa0ca969dfbf2a66fe6ee9ed94a7b6de1d",
+        "response": "371ac7460bda28c68b4b08650584cb5b7da0fd907be9361400033e0607560d57",
+        "documentation": "0a15e65d62b1ceb3441577c95a99ef80368bc70a7bed023451c1e4484e00d814",
+        "pricing": "d1fda586fda575f122f76ee451575f1f2b9e18cc573c649d26f71362a201f7dd"
+      }
+    },
+    {
+      "id": "wb-shop-brand-search",
+      "tool": "seerfar_wb_shop_brand_search",
+      "method": "POST",
+      "path": "/open-api/shop/detail/brand/search/wb",
+      "label": "Wildberries 查店铺品牌",
+      "hashes": {
+        "request": "3146edb95f5dd7f08e4302da679a567e2cf8ffc1bd6f2cab5e22e401e26554fc",
+        "response": "c254637557f517ce77a7a0be9a46cd8fad4832e3189691baa4643efc9f584ace",
+        "documentation": "058fc7284fbd393b7466c65bde6a2b277e1d4eda22cbd9c49828da018312a0c3",
+        "pricing": "33115aa22c7a1b809bb833f4d309912136a78c967b68de0aef28dc9e671d0729"
+      }
+    },
+    {
+      "id": "ozon-shop-category-search",
+      "tool": "seerfar_ozon_shop_category_search",
+      "method": "POST",
+      "path": "/open-api/shop/detail/category/search/ozon",
+      "label": "Ozon 查店铺类目",
+      "hashes": {
+        "request": "63962d6255d5925a6d6c67e42770a38eca0df1cb6a1b3a8ab58c5c58dd89f2d0",
+        "response": "d38604c2b1f46e908ff0f23d848aecd2292022dbde830e4e3bd1e6fb20aea24b",
+        "documentation": "631033f85293844a03c75d1b6bbddd919a0950eaf4446a693b4f159f92b20654",
+        "pricing": "f01a6802c3ca48da51cde475567e79253d5c410d1792230e6566fd208e631183"
+      }
+    },
+    {
+      "id": "wb-shop-category-search",
+      "tool": "seerfar_wb_shop_category_search",
+      "method": "POST",
+      "path": "/open-api/shop/detail/category/search/wb",
+      "label": "Wildberries 查店铺类目",
+      "hashes": {
+        "request": "c0ffaf97ef1adf06fc94668b5fb8f545f43d34b9672eeca49a5303f578a2c8fa",
+        "response": "0631faf866eca143b71dccebc729a578d017e9e6d469751676f0dc6aa78b3d13",
+        "documentation": "664f279506098cd0ecac84bc8882907c8f3393be53bde276919c669b55254a57",
+        "pricing": "25d009e6f23f343a0c4b420acfc4dc3f59e2895a041f8091dc1bb027ae020b44"
+      }
+    },
+    {
+      "id": "ozon-product-detail-search",
+      "tool": "seerfar_ozon_product_detail_search",
+      "method": "POST",
+      "path": "/open-api/product/detail/search/ozon",
+      "label": "Ozon 查竞品",
+      "hashes": {
+        "request": "5597d9d14ab47d31a496aef1ed5c1299e2714dbf566539d7d0433e0cb90229b6",
+        "response": "045e662c16117d11c5779f931da854102358ce0df847a0fbfdb49cff0bbd23db",
+        "documentation": "21d7c3261b941a72417567f66358bd93d5aad5e837ab9144b21768d298cb4625",
+        "pricing": "34f905572e95c841602c4c3dbf9adb0abc996354dfd80949975f29e4b3dc6eca"
+      }
+    },
+    {
+      "id": "wb-product-detail-search",
+      "tool": "seerfar_wb_product_detail_search",
+      "method": "POST",
+      "path": "/open-api/product/detail/search/wb",
+      "label": "Wildberries 查竞品",
+      "hashes": {
+        "request": "2ab67ed3f77af4007257b09fe905c19258780bb0f25ad3394acb5487999feac5",
+        "response": "1c3bc50e6ac73e460d016e342b08d1221fc26618a09f8a4180541cb8aa0911c3",
+        "documentation": "5b790f7366914b2fd6c12aaa932ecd95a9547ade3bfa82435e23c5aa648de650",
+        "pricing": "2767db36e2b6ea360f9997bfde4d0bea934af5955709c55489f02422f3f28bc6"
+      }
+    },
+    {
+      "id": "ozon-product-similar",
+      "tool": "seerfar_ozon_product_similar",
+      "method": "POST",
+      "path": "/open-api/product/detail/similar/ozon",
+      "label": "Ozon 查相似商品",
+      "hashes": {
+        "request": "1d6eea0d12bf699f4735f23281faa6c3eb959475eb101fb4b4db01f0e13b540f",
+        "response": "093cf497351562ca149cb4f33223f270b1ec93315b3b3544a8758e7108632aca",
+        "documentation": "2a9836a7e62c273fcbca2b97fd09beba26571d30dec2e2330a179f09d3b17c23",
+        "pricing": "5962bf327de6ad9c8ae73d8cc59a3aaffef2392abcd6cb0dc1b540b19b399482"
+      }
+    },
+    {
+      "id": "wb-product-similar",
+      "tool": "seerfar_wb_product_similar",
+      "method": "POST",
+      "path": "/open-api/product/detail/similar/wb",
+      "label": "Wildberries 查相似商品",
+      "hashes": {
+        "request": "fa4c54d1631e7da15f1a08f0459f3c22bd9a15b1ae05ac16187c37706e5f0328",
+        "response": "b595cb1b9dcf90acb283457aa87c8c547bdaf82aa50b061cb964d5a72603fe46",
+        "documentation": "94e069610a1813a6d65013f0ddcdefaa562dee7eddb1c93e5f2fb6df84aee569",
+        "pricing": "2f7bdf9e923aab194b92c10451d82d4bd5360de8c953eed1591d361966562769"
+      }
+    },
+    {
+      "id": "ozon-product-variations-characteristics",
+      "tool": "seerfar_ozon_product_variations_characteristics",
+      "method": "POST",
+      "path": "/open-api/product/detail/variations/characteristics/ozon",
+      "label": "Ozon 查变体特征",
+      "hashes": {
+        "request": "1d457330ac9a0a96a323e03d018845898f6dd33aaf88effe8c8b49b3430cc195",
+        "response": "58958d51700e6bf3dabbda1208b0ba3080328e313ac76793e66991d5c482a802",
+        "documentation": "84ffd73e0a2c91948057c29b81fd13f610c0f01b9cddfc90aea24e4f2ef5297c",
+        "pricing": "da2d8a9264ac9523d840947a486593c55313cc3d697d2fd1aea41ce4f3cab01d"
+      }
+    },
+    {
+      "id": "wb-product-variations-characteristics",
+      "tool": "seerfar_wb_product_variations_characteristics",
+      "method": "POST",
+      "path": "/open-api/product/detail/variations/characteristics/wb",
+      "label": "Wildberries 查变体特征",
+      "hashes": {
+        "request": "92487db92027f065c1b6ebe3ca73c76e410200c20b2b6015455137156da67406",
+        "response": "58958d51700e6bf3dabbda1208b0ba3080328e313ac76793e66991d5c482a802",
+        "documentation": "ac7ec1cf2257e5decd93b95c71c33db8c0bf3c8f12a3d8516eeeb3f96c848207",
+        "pricing": "d44e4f07d6ca29f12d037901ad66e7652034e1e265c3c38e18b7948fc5bb20ec"
+      }
+    },
+    {
+      "id": "ozon-product-variations-top",
+      "tool": "seerfar_ozon_product_variations_top",
+      "method": "POST",
+      "path": "/open-api/product/detail/variations/top/ozon",
+      "label": "Ozon 查 Top 变体",
+      "hashes": {
+        "request": "b7407c6fc8298db04f121ab9ddeac3f00bdac709fb8a4a40e6e6d87d83eaacf0",
+        "response": "d528d4de405999753911b07ad6f4be1b51b9818220c2933f418fce4b3e5e499c",
+        "documentation": "737beaa4afd723650b0d4c21e9128aa4a51874a9c897c6a7e334a634a3e6b6ef",
+        "pricing": "63ea6d69b10bac29f4c4a6999fdb050ce83b9a06bdbaa2feba5a186514b44b11"
+      }
+    },
+    {
+      "id": "wb-product-variations-top",
+      "tool": "seerfar_wb_product_variations_top",
+      "method": "POST",
+      "path": "/open-api/product/detail/variations/top/wb",
+      "label": "Wildberries 查 Top 变体",
+      "hashes": {
+        "request": "bc9883437b098c097a2f5a2e524780028942f7a3ba820020fe038bd69858907d",
+        "response": "38ebe276879867c5d52803283c44ed417d240aeccd6dba5a899b654955b9a4ac",
+        "documentation": "c832865fa1a706ca0e86237eac988334cfcb18269a3c1898d8f71efc3f332d4a",
+        "pricing": "88b9284d5523863eca574e3e650d6b3af8cbe42023a3a0448609e18bdf84b903"
+      }
+    },
+    {
+      "id": "ozon-product-variations-search",
+      "tool": "seerfar_ozon_product_variations_search",
+      "method": "POST",
+      "path": "/open-api/product/detail/variations/search/ozon",
+      "label": "Ozon 查商品变体",
+      "hashes": {
+        "request": "e9441cc9c6cb22f661ae8eb5dd0e26664df4e79c7d2a4cda9b2a9be7ff900215",
+        "response": "5e36207a233131f2fd0b035aaff0d4d9699bde2f40893d1739510ff9b561b1c2",
+        "documentation": "a152cb745bde1bf288c9d4bed7ac5dc5a0d203c49a9f15c7dd043610191fbc37",
+        "pricing": "d95594c3f7884fabda01100f3491960eafe172e05fc027180172f587f6fc0c5c"
+      }
+    },
+    {
+      "id": "wb-product-variations-search",
+      "tool": "seerfar_wb_product_variations_search",
+      "method": "POST",
+      "path": "/open-api/product/detail/variations/search/wb",
+      "label": "Wildberries 查商品变体",
+      "hashes": {
+        "request": "61e14f901b43be7c485693eb4e90d5587a46b29b4be20bf5c4f0b556dab97d7e",
+        "response": "760c855c7a945321c97326ffe68aea50d46a697286dda029a6fb408c507a96f0",
+        "documentation": "069f5cdc512ae56a5263c59be2630eae71047c222491e644d845509b2cfa6105",
+        "pricing": "4ac699d3105cead1bebc76831d470551ad39a4c9a7a8bf0e55f901136ecd0d12"
+      }
+    },
+    {
+      "id": "ozon-product-collect",
+      "tool": "seerfar_ozon_product_collect",
+      "method": "POST",
+      "path": "/open-api/product/collect/ozon",
+      "label": "Ozon 采集商品",
+      "hashes": {
+        "request": "33c6c2d11c2f3281345ae5626d8298b46802ebcb9c07ff26b8590d21255f1301",
+        "response": "0f5e75f77543d84b8ee48cbcc5c7efa163988466d43554bae698ef7b2c81a4c3",
+        "documentation": "7b2829f0d923d92f8de31b06cc94c2729ec9a0b83562ec6e677563037e5d5189",
+        "pricing": "a0e1c2bc958067db90f9381c09e2368f340dababa11490fdaa2bd1e6e708388d"
+      }
+    },
+    {
+      "id": "wb-product-collect",
+      "tool": "seerfar_wb_product_collect",
+      "method": "POST",
+      "path": "/open-api/product/collect/wb",
+      "label": "Wildberries 采集商品",
+      "hashes": {
+        "request": "af03ef46732015c62bf422e7c1f0c3d691d16aa3ebe1390df7002be20eea4265",
+        "response": "0f5e75f77543d84b8ee48cbcc5c7efa163988466d43554bae698ef7b2c81a4c3",
+        "documentation": "79891c3d526e722be56fb4a60803636825940627b5390dd3eaab1948e00e7e60",
+        "pricing": "07414736f47b5e3e56b7d57864b3f650a9de7837fba1ee12a774307e80818ae4"
+      }
+    },
+    {
+      "id": "ozon-collect-box-page",
+      "tool": "seerfar_ozon_collect_box_page",
+      "method": "POST",
+      "path": "/open-api/collect-box/page/ozon",
+      "label": "Ozon 查询采集商品",
+      "hashes": {
+        "request": "a18cb0532c628ea569d629d8b9503337ac2b501a47f3de554dc21ba4e25c3558",
+        "response": "2c6511b8d816ca061738fca228ed33ef458b726fe31ae648397e2dbe586ea0d0",
+        "documentation": "dfa6adfbf47522c3f1bd08d3c12ee3feaba0badd01dcaf54f6552db5d496c8f2",
+        "pricing": "8d5cb40075e247e8d4ee12611cb96d3da2d96c1e8312877d706fe50b3abea8bf"
+      }
+    },
+    {
+      "id": "wb-collect-box-page",
+      "tool": "seerfar_wb_collect_box_page",
+      "method": "POST",
+      "path": "/open-api/collect-box/page/wb",
+      "label": "Wildberries 查询采集商品",
+      "hashes": {
+        "request": "8c600955bf02861b6409f3eb86b9a8440676aade6e906e1c80c1e680f0fc9651",
+        "response": "c18948fa5491829eea5829c41bfd71433ce19dca7853669a457d1d7021d5ac42",
+        "documentation": "5d08d0eef8d8d5912675772857301ba28c4a5a4d8a9649120395f404e8a3da1f",
+        "pricing": "f7ae7f238ed0df83309047b97ddd3015df6b2860ef0bf137d8c67ae273ebade1"
+      }
+    },
+    {
+      "id": "ozon-category-search",
+      "tool": "seerfar_ozon_category_search",
+      "method": "POST",
+      "path": "/open-api/category/detail/search/ozon",
+      "label": "Ozon 查类目",
+      "hashes": {
+        "request": "e4404d483b5a56b0222579a47dfd026a31992c880b772e8c5a0f90a6e321a863",
+        "response": "54e9121b92a7f745908bc5738ed523d106e1dd6dcf4fef013750a64a0a8b9739",
+        "documentation": "f3eb3aeef1e4b355f086f8a7a1d02c9b56e7ddcb061d9d0953bfef86ee8b8107",
+        "pricing": "380f176349770cc6ba619334bf3ebf1a89753626dfc40cd624cb822773b3d296"
+      }
+    },
+    {
+      "id": "wb-category-search",
+      "tool": "seerfar_wb_category_search",
+      "method": "POST",
+      "path": "/open-api/category/detail/search/wb",
+      "label": "Wildberries 查类目",
+      "hashes": {
+        "request": "efa2c35ca71cf3d8484689226830d760fc77d12095aa40a7f93af0439c5e7ba0",
+        "response": "4b73e9850fc1b45795720ef3174262eb39dfbc0ce30953e4447eda2f9c7ae286",
+        "documentation": "5b2c0da9bf6e6c2b691e300db97e0c7a9042995e023285f2860df9e3ee80a329",
+        "pricing": "7ef9fa5eaa56fe2273fcb24f109885baba62a418f094bc891d9e259e724b459a"
+      }
+    },
+    {
+      "id": "ozon-product-report-search",
+      "tool": "seerfar_ozon_product_report_search",
+      "method": "POST",
+      "path": "/open-api/productReport/search/ozon",
+      "label": "Ozon 查热销榜单",
+      "hashes": {
+        "request": "2db053275fc6eff28dadaf7b4882c544e05b8e9c29473ff397d23afdb8884fec",
+        "response": "82a6eac72481e77662a6cfccff139aa34bad739a22316ec427f369ae46a19c88",
+        "documentation": "fc52e4340a9c2d9449c6b64b7a472aca761dbf523ed034916a781ce7c109e612",
+        "pricing": "f63cb44991fa148c7357318135cb2a4f9f09928f8561da91c3a1f65083de9aff"
+      }
+    },
+    {
+      "id": "wb-product-report-search",
+      "tool": "seerfar_wb_product_report_search",
+      "method": "POST",
+      "path": "/open-api/productReport/search/wb",
+      "label": "Wildberries 查热销榜单",
+      "hashes": {
+        "request": "990a3f56c38cd27867f3cb42b560acde631b94a97519974ea1ef7c49d613d59a",
+        "response": "50129a22a2c724de84065515e1db63377dc530d80b6f16191f39afd1497041a2",
+        "documentation": "a6d1f35d0155566fdecf73994c4fe4cbce9e285f95bb7713951ed1b814809ce0",
+        "pricing": "788b64e63e6722fadab96c33c2f9ca5197039459ab335eea5e32fd968bde4515"
+      }
+    },
+    {
+      "id": "ozon-market-keyword-search",
+      "tool": "seerfar_ozon_market_keyword_search",
+      "method": "POST",
+      "path": "/open-api/market/search/ozon",
+      "label": "Ozon 查市场热词",
+      "hashes": {
+        "request": "0f5225c9cb2bddfc452a06bb09e159fd5f4429865348fe883cefa8eb0040c731",
+        "response": "485863dbf3a9add843e586f5ef6b4e173426a1d1a2e2b83a5442d3f93492e197",
+        "documentation": "ffe4a6abeac3f990a8489872663485783cefe8690d51eb1d9770ead89e6ca94a",
+        "pricing": "6c020a473e60d82b0472fdd232bfe24f98b7492368d5d80708cb6b1d0892006f"
+      }
+    },
+    {
+      "id": "wb-market-keyword-search",
+      "tool": "seerfar_wb_market_keyword_search",
+      "method": "POST",
+      "path": "/open-api/market/search/wb",
+      "label": "Wildberries 查市场热词",
+      "hashes": {
+        "request": "12c4a893a3f0d8823ef8063279e5c8a4a79425b061b096cd01013ca488a8bc61",
+        "response": "10a6f46fba0d20f83590cec602f9031f3e2780e58afaa0e03ad0a9535cbe2905",
+        "documentation": "2be17f119b0c7bd2f196752cd17b28b368b6c99a75af662f30567197a0fbc4d7",
+        "pricing": "ad6af6f956e6a39b9636ad4cb45a6c43993d0277bdb6656b57faa90678daff9f"
+      }
+    },
+    {
+      "id": "ozon-keyword-mining",
+      "tool": "seerfar_ozon_keyword_mining",
+      "method": "POST",
+      "path": "/open-api/keyword/mining/ozon",
+      "label": "Ozon 关键词挖掘",
+      "hashes": {
+        "request": "7acafb2d2889a915745320e40f70aa0562965005181910facabcb559fb2c436f",
+        "response": "83db61f8552b406092442eec4623f35bff147cd1c39efb9a9c358007494b681e",
+        "documentation": "77b90fb560cf001be5ec7b64b334349d44168233c91b045fb587b9d7753195a3",
+        "pricing": "dcca300c013600d14085b94a1105f7e75cfc9c4e1762c617fe82bacc442462a8"
+      }
+    },
+    {
+      "id": "wb-keyword-mining",
+      "tool": "seerfar_wb_keyword_mining",
+      "method": "POST",
+      "path": "/open-api/keyword/mining/wb",
+      "label": "Wildberries 关键词挖掘",
+      "hashes": {
+        "request": "a3a534ad5d96502b3ce18db9aaf18ec8bbaf469a9c3707654ab771d39f9d7d89",
+        "response": "c865feb7f22598feb2f9b1f6531f41f1c099cca3be084a6687867122269cf9e5",
+        "documentation": "4169cfce101e49d790ab35ddc6939eb7d165ec9d2057f79e41b4f103a9516974",
+        "pricing": "0af06eb4f7ab807df72e951353b24ec3926936cced74e810ab21ca6a8b6909f7"
+      }
+    },
+    {
+      "id": "ozon-keyword-back-search",
+      "tool": "seerfar_ozon_keyword_back_search",
+      "method": "POST",
+      "path": "/open-api/keyword/backSearch/ozon",
+      "label": "Ozon 关键词反查",
+      "hashes": {
+        "request": "90001e69055a6499c1b6e291ab157eea9ed252d21b7a8f0ad026e139332c7bdb",
+        "response": "433f785f57e4560568351b94162df97877273a024cef9f9121d4a606884fd3f6",
+        "documentation": "10bde9b54c1259e58ad8a76bc667aadcc5fc4aca1766fc3ba9c044b9b8e94ace",
+        "pricing": "fee6ed433c3994e620d9ed8701428be7b7bcc645942877f5b536858deac91cf2"
+      }
+    },
+    {
+      "id": "wb-keyword-back-search",
+      "tool": "seerfar_wb_keyword_back_search",
+      "method": "POST",
+      "path": "/open-api/keyword/backSearch/wb",
+      "label": "Wildberries 关键词反查",
+      "hashes": {
+        "request": "0d94affba049ce5f052002f4ff24137f96547fa1ba722a8b33a1c491d42c818b",
+        "response": "ddacacfc430f2358c34fe88bdef53a99fbfe8ca3cb859dcff6ed530c7afa0a0d",
+        "documentation": "6ff974fef1f4ea06c41bf2378ae663ecc5abad6122ac7c0a4dacdde3ad6fc319",
+        "pricing": "68eece0c9932266288b811dfd3970c58bab40872b3c4f9f64f5a1df375336c88"
+      }
+    },
+    {
+      "id": "ozon-review-analyse-task-add",
+      "tool": "seerfar_ozon_review_analyse_task_add",
+      "method": "POST",
+      "path": "/open-api/review/analyse/ozon/task/add",
+      "label": "Ozon 创建评论分析任务",
+      "hashes": {
+        "request": "7b462de18b230b4bc15ccdf950a38f68485d15a9045723fa3a15add2a5cadc74",
+        "response": "81bd3520b0e67bb3c755a19c55221dd881574888961c2f8048048ae61b43d547",
+        "documentation": "765ab60b9a0e69c9be84f1b79858f164add9fa8aedbfabfd689a998d30f02532",
+        "pricing": "4acbcd34b82f533368555f4667079cb9353098c41586a7c820edef854fed44ca"
+      }
+    },
+    {
+      "id": "ozon-review-analyse-report",
+      "tool": "seerfar_ozon_review_analyse_report",
+      "method": "POST",
+      "path": "/open-api/review/analyse/ozon/report",
+      "label": "Ozon 查评论分析报表",
+      "hashes": {
+        "request": "268fec66d94f1fbc7ce279eea63a5810560df9a501b7469f8dd466f297c21585",
+        "response": "645ddd8e11eebb3ff919372f5b341173e0d00b1ada035ee97a89a903e9adbc63",
+        "documentation": "36c54305b555ae02b9653c175566a99d5dd64538cb485c368e9fd9e4c3476481",
+        "pricing": "405d3ca6acef2af9f493df1e594eb37cad7c4d0bd890a5b715632c1f79b45871"
+      }
+    },
+    {
+      "id": "ozon-review-analyse-word-frequency",
+      "tool": "seerfar_ozon_review_analyse_word_frequency",
+      "method": "POST",
+      "path": "/open-api/review/analyse/ozon/wordFrequency",
+      "label": "Ozon 查评论词频",
+      "hashes": {
+        "request": "4de8069732d0c4b33d632b8ab26f2c4ef8227e9d759c4fd8ff9dca8469ac6406",
+        "response": "26531a2fb2828ed7153410456673839e5588b95b3da8d9751b4aa6bf8e9fa6bf",
+        "documentation": "f7e6c0506868077d45d7c7c59f8b70cc98ca48f1f7305cc83efce7bc7bf7ad96",
+        "pricing": "32ffee720bcc43b13b907409415a60aef99f2bbf5786513003e051fe5443e51e"
+      }
+    },
+    {
+      "id": "ozon-review-analyse-review-statistic",
+      "tool": "seerfar_ozon_review_analyse_review_statistic",
+      "method": "POST",
+      "path": "/open-api/review/analyse/ozon/reviewStatistic",
+      "label": "Ozon 查评论统计",
+      "hashes": {
+        "request": "b8aad5cb6e5d80fdf6096902cf0a9061cfb3d7a794efd432752ce8fc82bf46d2",
+        "response": "df22b70a9b5b0682faecc30fb65a6a5f8b72b83ff530dcb1038da4ec8e5572c3",
+        "documentation": "971012f7b11284f70ebb4f658782978dcd27699217bdbc1b8d5dd63029dd7b28",
+        "pricing": "7b1ff0357a54d89ef63c31e10a54df827452a07f8f9cd5d056e4664031fb3968"
+      }
+    },
+    {
+      "id": "ozon-review-analyse-original-review",
+      "tool": "seerfar_ozon_review_analyse_original_review",
+      "method": "POST",
+      "path": "/open-api/review/analyse/ozon/originalReview",
+      "label": "Ozon 查原始评论",
+      "hashes": {
+        "request": "afc05641c0cd90d3da5aff9b6c62f4ff85718b58e772ec4602435b44c6e24d81",
+        "response": "a7f607cf89b4ebebf6adcba3a29494fbddecaead748eee6b30636c8184d09ae6",
+        "documentation": "a54fcef49769e1b0a0fc7ffc6a3f3cc72f593f57508791442d0f8482ce966873",
+        "pricing": "877a7d8b7a0699f93f6d59d2b233761ea24a9dd2c5ef7d822740f364157b969a"
+      }
+    },
+    {
+      "id": "wb-review-analyse-task-add",
+      "tool": "seerfar_wb_review_analyse_task_add",
+      "method": "POST",
+      "path": "/open-api/review/analyse/wb/task/add",
+      "label": "Wildberries 创建评论分析任务",
+      "hashes": {
+        "request": "a6d5d3c7f99bf1d4d1c3a8bdb91da4a1366ec1233c49cb40364158879e2a4247",
+        "response": "c5607b353b4388a6d43ff2656cb124e1fbbb50a847bc6b9ddd0e26982ee21ade",
+        "documentation": "0fdb23cc38b6b66ce25b3212138815aa8f0f211919d1bcbfd64cd3392328c724",
+        "pricing": "4b78aa1a7c848a85cbd19df472455b541bafd133e4c8f459de494dc056ed0961"
+      }
+    },
+    {
+      "id": "wb-review-analyse-report",
+      "tool": "seerfar_wb_review_analyse_report",
+      "method": "POST",
+      "path": "/open-api/review/analyse/wb/report",
+      "label": "Wildberries 查评论分析报表",
+      "hashes": {
+        "request": "55f46f4ab467e869d3bded75bb102200176437de2621e6a74a838b20ca3f89de",
+        "response": "18bcbe5e3483849d72e2fb87cedef6c53f61a908dab8039cb98b3c6aeb2e0b63",
+        "documentation": "419d7c290a090c6d3b99a86e510523675c9749e879f8bf30b7a37341e62b8639",
+        "pricing": "9d064f6bc56892266d3f88820dbca54d7740ebdd9cc4170a8213b857ef25cfa0"
+      }
+    },
+    {
+      "id": "wb-review-analyse-word-frequency",
+      "tool": "seerfar_wb_review_analyse_word_frequency",
+      "method": "POST",
+      "path": "/open-api/review/analyse/wb/wordFrequency",
+      "label": "Wildberries 查评论词频",
+      "hashes": {
+        "request": "a9ad9de23c6c1513c84a8fb16ded574ac747053dbdea73ec8561c49950117235",
+        "response": "9a93a1d2c8d3d6f1ab95665cbc169d0c5e3faabe686cdafbe7eb40fbe149cc84",
+        "documentation": "8590c18a3534b728d95b30815bfa645c75dd8b602c4ec4cfd0e1bf3c970aa105",
+        "pricing": "9675bb83bc42b69b85e593e82428cea6ee9138c584a3b20f8acce6b9c94549cc"
+      }
+    },
+    {
+      "id": "wb-review-analyse-review-statistic",
+      "tool": "seerfar_wb_review_analyse_review_statistic",
+      "method": "POST",
+      "path": "/open-api/review/analyse/wb/reviewStatistic",
+      "label": "Wildberries 查评论统计",
+      "hashes": {
+        "request": "b2fb91dc356c0a5ad9fa7c3ed30b79b67743082e636646052b78a7f363b78708",
+        "response": "724ebfd9b2db5f24e1a9254b6583eaa9a55293eb27487fbe1a7905e571b5ab67",
+        "documentation": "c69ea7194ba4f3da2ac423a6073d27021a477e79fe2619eb7644d1509bede635",
+        "pricing": "243190a87f0cc7f1c2f55f29d849408b844ca48c982ffa75c007001f6d24452e"
+      }
+    },
+    {
+      "id": "wb-review-analyse-original-review",
+      "tool": "seerfar_wb_review_analyse_original_review",
+      "method": "POST",
+      "path": "/open-api/review/analyse/wb/originalReview",
+      "label": "Wildberries 查原始评论",
+      "hashes": {
+        "request": "617811fb972ef20ca1c3492a3a37a5a7a633c65911fab59d3a28aab662790449",
+        "response": "55aac7a26bf8be653ae687fb121c4b4d4e4089cf927631d073dfd7a5b25785ea",
+        "documentation": "5b93303d93ce35908be7d6448d5826801a1bceba88435652de119076188f1d8f",
+        "pricing": "106a2402a39a78da925bf1cb19439fb52feb9c63966c7cab8cf82330b165cb4f"
+      }
+    }
+  ]
+}

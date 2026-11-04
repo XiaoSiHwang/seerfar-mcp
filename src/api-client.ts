@@ -4,6 +4,8 @@ export interface ClientOptions {
   baseUrl?: string;
   timeoutMs?: number;
   fetcher?: typeof fetch;
+  /** WorkBuddy 插件设置注入的 Key，作为工具参数/HTTP 请求头之外的兜底。 */
+  envKey?: string;
 }
 
 export interface ApiResult {
@@ -16,15 +18,17 @@ export interface ApiResult {
 
 export function normalizeApiKey(value?: string): string {
   const key = value?.trim().replace(/^Bearer\s+/i, '') ?? '';
-  if (!key || /\s/.test(key)) throw new Error('请为本次调用提供有效的 apiKey 或 X-Seerfar-Api-Key 请求头。');
+  if (!key || /\s/.test(key) || key.includes('${')) throw new Error('请提供有效的 Seerfar API Key（WorkBuddy 插件设置或 apiKey 参数）。');
   return key;
 }
 
-function scrub(value: unknown, key: string): unknown {
-  if (typeof value === 'string') return value.split(key).join('[REDACTED]').split(encodeURIComponent(key)).join('[REDACTED]');
-  if (Array.isArray(value)) return value.map((item) => scrub(item, key));
+function scrub(value: unknown, keys: string[]): unknown {
+  if (typeof value === 'string') {
+    return keys.reduce((text, key) => text.split(key).join('[REDACTED]').split(encodeURIComponent(key)).join('[REDACTED]'), value);
+  }
+  if (Array.isArray(value)) return value.map((item) => scrub(item, keys));
   if (value && typeof value === 'object') {
-    return Object.fromEntries(Object.entries(value).map(([name, item]) => [scrub(name, key) as string, scrub(item, key)]));
+    return Object.fromEntries(Object.entries(value).map(([name, item]) => [scrub(name, keys) as string, scrub(item, keys)]));
   }
   return value;
 }
@@ -63,6 +67,7 @@ function requestHeaders(endpoint: Endpoint, args: ApiArguments, key: string): He
 export class SeerfarClient {
   readonly baseUrl: string;
   readonly timeoutMs: number;
+  readonly envKey?: string;
   private readonly fetcher: typeof fetch;
 
   constructor(options: ClientOptions = {}) {
@@ -72,12 +77,16 @@ export class SeerfarClient {
     this.timeoutMs = options.timeoutMs ?? 30_000;
     if (!Number.isSafeInteger(this.timeoutMs) || this.timeoutMs <= 0) throw new Error('请求超时必须是正整数毫秒');
     this.fetcher = options.fetcher ?? fetch;
+    if (options.envKey) {
+      try { this.envKey = normalizeApiKey(options.envKey); } catch { this.envKey = undefined; }
+    }
   }
 
   async execute(endpoint: Endpoint, args: ApiArguments, headerKey?: string, signal?: AbortSignal): Promise<ApiResult> {
     let key: string;
-    try { key = normalizeApiKey(args.apiKey ?? headerKey); }
-    catch { return { isError: true, error: { kind: 'authentication', message: '本次调用缺少有效 API Key。' } }; }
+    try { key = normalizeApiKey(args.apiKey ?? headerKey ?? this.envKey); }
+    catch { return { isError: true, error: { kind: 'authentication', message: '本次调用缺少有效 API Key。请在 WorkBuddy 插件设置中填写 Seerfar API Key，或通过 apiKey 参数传入。' } }; }
+    const sensitiveKeys = [...new Set([key, this.envKey].filter((item): item is string => Boolean(item)))];
     const timeout = AbortSignal.timeout(this.timeoutMs);
     try {
       const response = await this.fetcher(requestUrl(this.baseUrl, endpoint, args), {
@@ -94,7 +103,7 @@ export class SeerfarClient {
       }
       const code = payload && typeof payload === 'object' ? (payload as JsonObject).code : undefined;
       return { isError: !response.ok || (code !== undefined && String(code) !== '200'), httpStatus: response.status,
-        response: scrub(payload, key), ...(response.headers.has('retry-after') ? { retryAfter: response.headers.get('retry-after')! } : {}) };
+        response: scrub(payload, sensitiveKeys), ...(response.headers.has('retry-after') ? { retryAfter: response.headers.get('retry-after')! } : {}) };
     } catch {
       const kind = timeout.aborted ? 'timeout' : signal?.aborted ? 'cancelled' : 'request_failed';
       return { isError: true, error: { kind, message: kind === 'timeout' ? 'Seerfar API 请求超时；未自动重试。' : kind === 'cancelled' ? '请求已取消。' : 'Seerfar API 请求失败；未自动重试。' } };

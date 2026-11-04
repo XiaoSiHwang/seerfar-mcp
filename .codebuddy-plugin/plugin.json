@@ -1,0 +1,24 @@
+{
+  "name": "seerfar-mcp",
+  "displayName": "Seerfar 数据助手",
+  "version": "0.2.0",
+  "description": "接入 Seerfar Open API，用自然语言查询 Ozon / Wildberries 的店铺、竞品、类目、关键词、榜单与评论数据。",
+  "author": {
+    "name": "XiaoSiHwang",
+    "url": "https://github.com/XiaoSiHwang"
+  },
+  "homepage": "https://github.com/XiaoSiHwang/seerfar-mcp",
+  "repository": "https://github.com/XiaoSiHwang/seerfar-mcp",
+  "keywords": ["seerfar", "ozon", "wildberries", "mcp", "电商数据"],
+  "category": "电商数据",
+  "mcpServers": "./.mcp.json",
+  "userConfig": {
+    "api_key": {
+      "type": "string",
+      "title": "Seerfar API Key",
+      "description": "在 Seerfar 控制台获取。保存后由 WorkBuddy 注入 MCP 服务，不会写入插件文件。",
+      "sensitive": true,
+      "required": true
+    }
+  }
+}

@@ -37,6 +37,19 @@ test('必填、数组对象、数值类型和枚举按文档校验', () => {
   assert.equal(validate({ ...args, baseUrl: 'https://other.example' }), false);
 });
 
+test('WorkBuddy 插件配置 Key 后不接受工具参数 apiKey', () => {
+  const endpoint = snapshot.sources.config.endpoints.find((e) => e.id === 'ozon-shop-search')!;
+  const args = { body: endpoint.bodyExample };
+  const configured = ajv.compile(inputSchema(endpoint, false, true));
+  assert.ok(configured(args), JSON.stringify(configured.errors));
+  assert.equal(configured({ ...args, apiKey: 'key' }), false);
+  const required = ajv.compile(inputSchema(endpoint));
+  assert.equal(required(args), false);
+  assert.ok(required({ ...args, apiKey: 'key' }));
+  assert.equal(required({ ...args, apiKey: '   ' }), false);
+  assert.equal(required({ ...args, apiKey: 'bad\nkey' }), false);
+});
+
 test('可选过滤条件允许 null；参数表遗漏的示例字段保留；HTTP 允许请求头动态 Key', () => {
   const endpoint = snapshot.sources.config.endpoints.find((e) => e.id === 'ozon-shop-search')!;
   const schema = inputSchema(endpoint);

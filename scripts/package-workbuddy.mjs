@@ -48,6 +48,7 @@ const marketplace = {
     description_en: 'Query Ozon and Wildberries shops, competitors, categories, keywords, rankings, and reviews through Seerfar Open API.',
     version: manifest.version,
     source: `./plugins/${manifest.name}`,
+    ...(manifest.license ? { license: manifest.license } : {}),
     ...(manifest.author ? { author: manifest.author } : {}),
     ...(manifest.homepage ? { homepage: manifest.homepage } : {}),
     ...(manifest.repository ? { repository: manifest.repository } : {}),
@@ -73,7 +74,7 @@ if (npmMode) {
         type: 'stdio',
         command: 'npx',
         args: ['-y', `seerfar-api-mcp@${manifest.version}`],
-        env: { SEERFAR_API_KEY: '${user_config.api_key}' },
+        env: { SEERFAR_API_KEY: '${PLUGIN_OPT:api_key}' },
       },
     },
   };

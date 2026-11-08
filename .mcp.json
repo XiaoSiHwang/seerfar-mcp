@@ -6,7 +6,7 @@
       "args": ["${CODEBUDDY_PLUGIN_ROOT}/dist/src/index.js"],
       "cwd": "${CODEBUDDY_PLUGIN_ROOT}",
       "env": {
-        "SEERFAR_API_KEY": "${user_config.api_key}"
+        "SEERFAR_API_KEY": "${PLUGIN_OPT:api_key}"
       }
     }
   }

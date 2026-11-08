@@ -3,7 +3,18 @@
   "version": "0.2.0",
   "description": "覆盖 Seerfar Open API 的 MCP 服务，支持动态 API Key 与文档版本比对",
   "type": "module",
-  "private": true,
+  "license": "MIT",
+  "author": {
+    "name": "XiaoSiHwang",
+    "url": "https://github.com/XiaoSiHwang"
+  },
+  "keywords": [
+    "mcp",
+    "seerfar",
+    "ozon",
+    "wildberries",
+    "ecommerce"
+  ],
   "engines": {
     "node": ">=22"
   },
@@ -12,6 +23,7 @@
   },
   "scripts": {
     "build": "tsc",
+    "prepack": "npm run build",
     "start": "node dist/src/index.js",
     "dev": "node --import tsx src/index.ts",
     "typecheck": "tsc --noEmit",
@@ -22,7 +34,8 @@
     "api:sync": "node --import tsx scripts/api-sync.ts",
     "api:diff": "node --import tsx scripts/api-diff.ts",
     "package:workbuddy": "node scripts/package-workbuddy.mjs",
-    "package:workbuddy:npm": "node scripts/package-workbuddy.mjs --npm"
+    "package:workbuddy:npm": "node scripts/package-workbuddy.mjs --npm",
+    "workbuddy:key": "node scripts/workbuddy-key.mjs"
   },
   "dependencies": {
     "@modelcontextprotocol/server": "2.4.0",
@@ -46,7 +59,9 @@
   "files": [
     "dist/src",
     "api",
+    "docs",
     "README.md",
-    "CHANGELOG.md"
+    "CHANGELOG.md",
+    "LICENSE"
   ]
 }

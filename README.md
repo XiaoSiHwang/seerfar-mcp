@@ -4,7 +4,7 @@
 
 覆盖官方文档全部 **41 个接口**，注册 **45 个 MCP 工具** 和 **3 个资源**；同时支持 stdio 与 Streamable HTTP 两种连接方式。
 
-- **API Key 两种给法**：WorkBuddy 插件里填一次，或每次调用随用随传；服务不落盘、不写日志、不做跨调用复用。
+- **API Key 多种给法**：WorkBuddy 连接器表单、插件凭据或每次调用时传入；服务不落盘、不写日志。
 - **接口自带说明书**：AI 可以先查接口目录和完整中文文档，再按官方参数调用，无需人工对照网页。
 - **文档可自我核对**：内置官方文档快照与哈希，可随时检查上游是否有新增或变更接口。
 
@@ -45,17 +45,20 @@ npm run build
 - 如果客户端提示找不到 `node`（常见于 nvm / fnm 安装），把 `command` 换成 `node` 的绝对路径，例如 `/Users/你的用户名/.nvm/versions/node/v22.11.0/bin/node`（`which node` 可查看）。
 - 保存后重启客户端，工具列表里出现 `seerfar_list_apis` 等 `seerfar_*` 即表示接入成功。
 
-### 3. WorkBuddy 插件（推荐）
+### 3. WorkBuddy 连接器和插件
 
-如果使用 WorkBuddy，可以直接打包成插件安装：
+项目提供符合 WorkBuddy 规范的 [连接器包](docs/WORKBUDDY-CONNECTOR.md)，通过表单配置 API Key；对应 npm 版本 `0.2.0` 已发布。
+
+也可以使用现有的 WorkBuddy 插件方案：
 
 ```sh
 npm run package:workbuddy
 ```
 
-生成 `release/seerfar-marketplace/` 后，在 WorkBuddy「设置 → 插件 → 市场 → 添加市场」中选择该目录，安装 `seerfar-mcp`，再在插件配置里填写 Seerfar API Key。
+生成 `release/seerfar-marketplace/` 后，在 WorkBuddy 侧栏「技能」页 →「套件」标签 →「添加市场」中选择该目录，安装 `seerfar-mcp`，
+再运行 `npm run workbuddy:key -- <你的 Seerfar API Key>` 写入 Key。
 
-插件会把 Key 以 `SEERFAR_API_KEY` 环境变量注入 MCP 服务，业务工具不再暴露 `apiKey` 参数。完整的上架流程见 [WorkBuddy 插件发布指南](docs/WORKBUDDY.md)。
+插件配置 Key 后会以 `SEERFAR_API_KEY` 环境变量注入 MCP 服务，业务工具不再暴露 `apiKey` 参数。完整的上架流程见 [WorkBuddy 插件发布指南](docs/WORKBUDDY.md)。
 
 ### 4. 开始对话
 
@@ -73,16 +76,25 @@ AI 会自动挑选工具并组织参数；你也可以直接点名某个工具�
 
 ## 二、API Key 怎么给
 
-普通 MCP 客户端取 Key 的优先级：**工具参数 `apiKey` > HTTP 请求头 `X-Seerfar-Api-Key` > 启动环境变量 `SEERFAR_API_KEY`**。WorkBuddy 插件模式只使用插件设置注入的 Key，工具 Schema 不暴露 `apiKey`。
+未配置启动环境变量时，普通 MCP 客户端可使用工具参数 `apiKey` 或 HTTP 请求头 `X-Seerfar-Api-Key`，两者同时提供时以工具参数为准。配置 `SEERFAR_API_KEY` 后，工具 Schema 不再暴露 `apiKey`；HTTP 请求头仍可覆盖环境变量。WorkBuddy 连接器通过表单注入环境变量。
 
 ### 1. WorkBuddy 插件（推荐）
 
-在 WorkBuddy 的插件配置面板填写「Seerfar API Key」。该值是敏感配置：
+安装插件后运行一次：
 
-- WorkBuddy 存进系统凭据存储，不写进插件文件或 `settings.json`。
-- 启动 MCP 服务时通过 `.mcp.json` 的 `${user_config.api_key}` 注入 `SEERFAR_API_KEY`。
-- 服务端只在内存中使用，不落盘、不写日志；上游响应若回显 Key 会被脱敏为 `[REDACTED]`。
-- 插件模式下工具 Schema 不暴露 `apiKey`，避免 Key 进入对话记录；普通 MCP 客户端仍可用 `apiKey` 参数临时指定 Key。
+```sh
+npm run workbuddy:key -- sk-你的Key
+```
+
+Key 会写进 `~/.workbuddy/credentials.json`（权限 0600），WorkBuddy 启动 MCP 时注入为 `SEERFAR_API_KEY`：
+
+- 不写进插件文件、`settings.json` 或对话记录。
+- `npm run workbuddy:key -- --show` 只显示掩码，可确认写到了哪个插件 ID。
+- `npm run workbuddy:key -- --clear` 清除。
+- 插件模式下工具 Schema 不暴露 `apiKey`，避免 Key 进入对话记录。
+- 不写 Key 也能启动，此时业务工具会要求本次调用传入 `apiKey`。
+
+服务端只在内存中使用 Key，不落盘、不写日志；上游响应若回显 Key 会被脱敏为 `[REDACTED]`。
 
 ### 2. 普通 MCP 客户端
 
@@ -223,7 +235,7 @@ npm start -- --transport http --port 3000
 }
 ```
 
-HTTP 模式同样支持每次调用的 `apiKey` 参数，也可以在**每个 MCP HTTP 请求**上带 `X-Seerfar-Api-Key` 请求头。两者同时提供时以工具参数为准；都缺失时再回退到启动环境变量 `SEERFAR_API_KEY`，仍没有则不调用上游。请求头里的 Key 不做会话级保存。
+HTTP 模式支持在**每个 MCP HTTP 请求**上带 `X-Seerfar-Api-Key` 请求头。没有配置环境变量时也支持每次调用的 `apiKey` 参数，两者同时提供时以工具参数为准；配置环境变量后工具不接受 `apiKey`，请求头优先于环境变量。没有可用 Key 时不调用上游。请求头里的 Key 不做会话级保存。
 
 服务使用无状态连接，默认只监听 `127.0.0.1` 并校验 Host 与 Origin，**面向本机或受信环境使用**。若需跨机器访问，请自行在反向代理层完成鉴权与 TLS。
 
@@ -263,7 +275,7 @@ HTTP 模式同样支持每次调用的 `apiKey` 参数，也可以在**每个 MC
 `command` 改用 `node` 的绝对路径（`which node` 查看）。
 
 **调用时报鉴权错误？**
-WorkBuddy 插件用户先在插件配置里填写 Key；普通 MCP 客户端确认本次调用带了 `apiKey`，且 Key 没有多余空格。可先用 `seerfar_quota` 验证 Key 与余额。
+WorkBuddy 插件用户先运行 `npm run workbuddy:key -- <API Key>`（`--show` 可确认写入结果）；普通 MCP 客户端确认本次调用带了 `apiKey`，且 Key 没有多余空格。可先用 `seerfar_quota` 验证 Key 与余额。
 
 **要联网才能用吗？**
 不需要。接口文档以快照形式随项目保存，只有 `seerfar_check_api_updates` 和文档同步会访问官方页面。
@@ -284,4 +296,5 @@ JSON 中反斜杠需转义，例如 `"C:\\\\tools\\\\seerfar-mcp\\\\dist\\\\src\
 npm run check   # 类型检查 + 全部测试
 npm run dev     # 以 tsx 直接运行源码
 npm run package:workbuddy   # 生成 WorkBuddy 自包含插件目录
+npm run workbuddy:key -- <API Key>   # 把 Key 写入本机 WorkBuddy 凭据
 ```
